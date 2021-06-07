@@ -21,4 +21,19 @@
     <string name="error_back">錯誤回饋</string>
     <string name="all_history">全部紀錄</string>
     <string name="a_history">單一紀錄</string>
+
+    <string name="question_type">作答方式</string>
+    <string name="question_content">測驗內容</string>
+    <string-array name="question_type">
+        <item>問答</item>
+        <item>填空</item>
+        <item>選擇</item>
+    </string-array>
+
+    <string-array name="question_content">
+        <item>平假名</item>
+        <item>片假名</item>
+        <item>羅馬音</item>
+    </string-array>
+
 </resources>
