@@ -9,9 +9,15 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    
+    <string name="menu_history">歷史紀錄</string>
+    <string name="menu_game">作答區</string>
+
     <string name="app_name_start">日文學習\nAPP</string>
     <string name="start">START</string>
+    <string name="game_content">作答內容</string>
+    <string name="game_history">答題記錄</string>
+
+    <string name="error_back">錯誤回饋</string>
+    <string name="all_history">全部紀錄</string>
+    <string name="a_history">單一紀錄</string>
 </resources>

@@ -1,13 +1,12 @@
-package tw.edu.pu.nihongo_benkyo.ui.home
+package tw.edu.pu.nihongo_benkyo.ui.game
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentHomeBinding
 
@@ -27,11 +26,15 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        _binding!!.content.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_home_to_gameChoseFragment)
+        }
+        _binding!!.history.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_home_to_nav_gallery)
+        }
 
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {

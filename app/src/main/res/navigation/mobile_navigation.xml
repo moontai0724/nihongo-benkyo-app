@@ -7,19 +7,25 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="tw.edu.pu.nihongo_benkyo.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="tw.edu.pu.nihongo_benkyo.ui.game.HomeFragment"
+        android:label="@string/menu_game"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_gameChoseFragment"
+            app:destination="@id/gameChoseFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="tw.edu.pu.nihongo_benkyo.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:name="tw.edu.pu.nihongo_benkyo.ui.history.GalleryFragment"
+        android:label="@string/menu_history"
         tools:layout="@layout/fragment_gallery" />
-
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="tw.edu.pu.nihongo_benkyo.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/gameChoseFragment"
+        android:name="tw.edu.pu.nihongo_benkyo.GameChoseFragment"
+        android:label="GameChoseFragment" />
+
 </navigation>

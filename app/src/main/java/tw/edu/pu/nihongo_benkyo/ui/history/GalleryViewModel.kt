@@ -1,4 +1,4 @@
-package tw.edu.pu.nihongo_benkyo.ui.gallery
+package tw.edu.pu.nihongo_benkyo.ui.history
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
