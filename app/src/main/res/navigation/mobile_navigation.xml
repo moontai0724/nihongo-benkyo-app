@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_nav_home_to_gameChoseFragment"
-            app:destination="@id/gameChoseFragment" />
+            app:destination="@id/nav_game" />
         <action
             android:id="@+id/action_nav_home_to_nav_gallery"
             app:destination="@id/nav_gallery" />
@@ -24,8 +24,8 @@
         android:label="@string/menu_history"
         tools:layout="@layout/fragment_gallery" />
     <fragment
-        android:id="@+id/gameChoseFragment"
-        android:name="tw.edu.pu.nihongo_benkyo.GameChoseFragment"
+        android:id="@+id/nav_game"
+        android:name="tw.edu.pu.nihongo_benkyo.ui.game.GameChoseFragment"
         android:label="GameChoseFragment" />
 
 </navigation>
