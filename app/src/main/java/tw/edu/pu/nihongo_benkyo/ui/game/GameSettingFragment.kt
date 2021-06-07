@@ -8,13 +8,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import tw.edu.pu.nihongo_benkyo.R
-import tw.edu.pu.nihongo_benkyo.databinding.FragmentGameChoseBinding
+import tw.edu.pu.nihongo_benkyo.databinding.FragmentGameSettingBinding
 import java.util.*
 
-class GameChoseFragment : Fragment() {
+class GameSettingFragment : Fragment() {
     private lateinit var gameViewModel: GameViewModel
-    private lateinit var dataBinding: FragmentGameChoseBinding
-    private lateinit var adapter: GameChoseAdapter
+    private lateinit var dataBinding: FragmentGameSettingBinding
+    private lateinit var adapter: GameSettingAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,8 +22,8 @@ class GameChoseFragment : Fragment() {
         val typeArr =  ArrayList(listOf(*resources.getStringArray(R.array.question_type)))
         val contentArr =  ArrayList(listOf(*resources.getStringArray(R.array.question_content)))
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-        dataBinding = FragmentGameChoseBinding.inflate(inflater, container, false)
-        adapter = GameChoseAdapter()
+        dataBinding = FragmentGameSettingBinding.inflate(inflater, container, false)
+        adapter = GameSettingAdapter()
         dataBinding.adapter = adapter
         gameViewModel.setData(typeArr)
         dataBinding.type.setOnClickListener {

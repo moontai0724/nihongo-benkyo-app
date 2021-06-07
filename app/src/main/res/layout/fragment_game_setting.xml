@@ -6,13 +6,13 @@
     <data>
         <variable
             name="adapter"
-            type="tw.edu.pu.nihongo_benkyo.ui.game.GameChoseAdapter" />
+            type="tw.edu.pu.nihongo_benkyo.ui.game.GameSettingAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.game.GameChoseFragment">
+        tools:context=".ui.game.GameSettingFragment">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -23,7 +23,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/background" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/testContent"
@@ -39,10 +40,10 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="41dp"
-                android:layout_marginEnd="46dp"
                 android:text="@string/question_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,9 +62,9 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="45dp"
-                android:layout_marginTop="41dp"
                 android:text="@string/question_type"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

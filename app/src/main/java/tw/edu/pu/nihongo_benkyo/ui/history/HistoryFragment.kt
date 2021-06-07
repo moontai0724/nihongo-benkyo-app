@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import tw.edu.pu.nihongo_benkyo.databinding.FragmentGalleryBinding
+import tw.edu.pu.nihongo_benkyo.databinding.FragmentHistoryBinding
 
-class GalleryFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentHistoryBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,7 +25,7 @@ class GalleryFragment : Fragment() {
         galleryViewModel =
             ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 

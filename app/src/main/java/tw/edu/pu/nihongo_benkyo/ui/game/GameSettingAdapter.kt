@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tw.edu.pu.nihongo_benkyo.databinding.ChoseQuestionItemBinding
 
-class GameChoseAdapter : RecyclerView.Adapter<GameChoseViewHolder>() {
+class GameSettingAdapter : RecyclerView.Adapter<GameChoseViewHolder>() {
 
     private var dataArr: ArrayList<String> = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameChoseViewHolder {
