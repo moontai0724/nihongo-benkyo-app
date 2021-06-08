@@ -15,6 +15,7 @@
             android:contentDescription="@string/background"
             android:scaleType="matrix"
             android:src="@drawable/img_home"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
