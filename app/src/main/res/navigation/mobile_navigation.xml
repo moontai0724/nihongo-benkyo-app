@@ -22,7 +22,11 @@
         android:id="@+id/nav_gallery"
         android:name="tw.edu.pu.nihongo_benkyo.ui.history.HistoryFragment"
         android:label="@string/menu_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_nav_gallery_to_allHistoryFragment"
+            app:destination="@id/allHistoryFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_game"
@@ -44,5 +48,10 @@
         android:id="@+id/gamingInputFragment"
         android:name="tw.edu.pu.nihongo_benkyo.ui.game.GamingInputFragment"
         tools:layout="@layout/fragment_gaming_input" />
+    <fragment
+        android:id="@+id/allHistoryFragment"
+        android:name="tw.edu.pu.nihongo_benkyo.ui.history.AllHistoryFragment"
+        android:label="@string/all_history"
+        tools:layout="@layout/fragment_all_history" />
 
 </navigation>

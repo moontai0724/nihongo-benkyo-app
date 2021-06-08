@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentHistoryBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,10 +21,10 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
-
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        _binding!!.button2.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_gallery_to_allHistoryFragment)
+        }
         return binding.root
     }
 
