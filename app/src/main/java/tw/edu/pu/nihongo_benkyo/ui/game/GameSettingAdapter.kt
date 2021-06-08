@@ -3,7 +3,6 @@ package tw.edu.pu.nihongo_benkyo.ui.game
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +11,15 @@ import tw.edu.pu.nihongo_benkyo.databinding.ChoseTypeItemBinding
 import tw.edu.pu.nihongo_benkyo.json.Tag
 import kotlin.properties.Delegates
 
-class GameSettingAdapter(private val activity: Activity, private val single: Boolean) :
+class GameSettingAdapter(
+    private val activity: Activity,
+    private val viewModel: GameViewModel,
+    private val single: Boolean
+) :
     RecyclerView.Adapter<GameChoseViewHolder>() {
 
-    private var type: String = ""
-    private var tags: List<String> = ArrayList()
     private var dataArr: List<Tag> = ArrayList()
-    private var selectedPosition by Delegates.observable(-1) { property, oldPos, newPos ->
+    private var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
         notifyItemChanged(oldPos)
         notifyItemChanged(newPos)
     }
@@ -40,19 +41,29 @@ class GameSettingAdapter(private val activity: Activity, private val single: Boo
         if (holder.binding is ChoseQuestionItemBinding) {
             holder.setBind(false, dataArr[position])
             val bind = holder.binding as ChoseQuestionItemBinding
+            viewModel.tags.forEach {
+                if (it == dataArr[position].chinese)
+                    bind.checkBox.isChecked = true
+            }
+
             bind.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked)
-                    tags = tags + buttonView.text.toString()
-                else
-                    tags.drop(tags.indexOf(buttonView.text.toString()))
+                    if (!viewModel.tags.contains(buttonView.text.toString()))
+                        viewModel.tags = viewModel.tags + buttonView.text.toString()
+                    else
+                        viewModel.tags.drop(viewModel.tags.indexOf(buttonView.text.toString()))
             }
         } else if (holder.binding is ChoseTypeItemBinding) {
             holder.setBind(selectedPosition == position, dataArr[position])
             val bind = holder.binding as ChoseTypeItemBinding
+            if (viewModel.type == dataArr[position].chinese){
+                Handler(Looper.getMainLooper()).postDelayed({
+                    bind.radioButton.isChecked = true
+                }, 0)
+            }
             bind.radioButton.setOnCheckedChangeListener { buttonView, _ ->
                 selectedPosition = position
-                type = buttonView.text.toString()
-
+                viewModel.type = buttonView.text.toString()
             }
         }
     }
@@ -73,7 +84,7 @@ class GameSettingAdapter(private val activity: Activity, private val single: Boo
 class GameChoseViewHolder :
     RecyclerView.ViewHolder {
     var binding: Any
-    lateinit var activity: Activity
+    private lateinit var activity: Activity
 
     constructor(activity: Activity, typeBind: ChoseTypeItemBinding) : super(typeBind.root) {
         binding = typeBind

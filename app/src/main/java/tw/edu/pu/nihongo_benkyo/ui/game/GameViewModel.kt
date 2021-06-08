@@ -9,6 +9,8 @@ import java.util.*
 class GameViewModel : ViewModel() {
     var arr: MutableLiveData<List<Tag>> = MutableLiveData()
     private val repository = Repository()
+    var type: String = ""
+    var tags: List<String> = ArrayList()
     var single: Boolean = true
     fun getType(){
         repository.getType {

@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentGameSettingBinding
+import java.util.ArrayList
 
 class GameSettingFragment : Fragment() {
     private lateinit var gameViewModel: GameViewModel
@@ -45,7 +47,15 @@ class GameSettingFragment : Fragment() {
             )
         }
         dataBinding.next.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_game_to_gamingSelectionFragment)
+            val bundle = Bundle()
+            bundle.putString("type", gameViewModel.type)
+            bundle.putStringArrayList("tags", gameViewModel.tags as ArrayList<String>)
+            when(gameViewModel.type ){
+                "選擇題" -> findNavController().navigate(R.id.action_nav_game_to_gamingSelectionFragment, bundle)
+                "" -> Toast.makeText(requireContext(), "有選擇沒選到喔", Toast.LENGTH_LONG).show()
+                else -> findNavController().navigate(R.id.action_nav_game_to_gamingInputFragment, bundle)
+            }
+
         }
 
         return dataBinding.root
@@ -55,7 +65,7 @@ class GameSettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
         gameViewModel.arr.observe(viewLifecycleOwner, {
-            adapter = GameSettingAdapter(requireActivity(), gameViewModel.single)
+            adapter = GameSettingAdapter(requireActivity(), gameViewModel, gameViewModel.single)
             dataBinding.adapter = adapter
             adapter.setData(it)
         })

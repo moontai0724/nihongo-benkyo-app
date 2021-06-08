@@ -32,10 +32,17 @@
         <action
             android:id="@+id/action_nav_game_to_gamingSelectionFragment"
             app:destination="@id/gamingSelectionFragment" />
+        <action
+            android:id="@+id/action_nav_game_to_gamingInputFragment"
+            app:destination="@id/gamingInputFragment" />
     </fragment>
     <fragment
         android:id="@+id/gamingSelectionFragment"
         android:name="tw.edu.pu.nihongo_benkyo.ui.game.GamingSelectionFragment"
         tools:layout="@layout/fragment_gaming_selection" />
+    <fragment
+        android:id="@+id/gamingInputFragment"
+        android:name="tw.edu.pu.nihongo_benkyo.ui.game.GamingInputFragment"
+        tools:layout="@layout/fragment_gaming_input" />
 
 </navigation>
