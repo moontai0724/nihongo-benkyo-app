@@ -24,6 +24,8 @@
 
     <string name="question_type">作答方式</string>
     <string name="question_content">測驗內容</string>
+    <string name="icon">icon</string>
+    <string name="next">下一步</string>
     <string-array name="question_type">
         <item>問答</item>
         <item>填空</item>
