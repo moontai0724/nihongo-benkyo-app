@@ -40,33 +40,81 @@
             app:layout_constraintWidth_percent="0.8"
             tools:context=".ui.game.GameSettingFragment">
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/type"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/pink_800"
-                android:gravity="center"
-                android:text="@string/question_type"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.5">
 
-            <TextView
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_write_hand_white"
+                    android:contentDescription="@string/icon" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:contentDescription="@string/icon"
+                    android:gravity="center"
+                    android:text="@string/question_type"
+                    android:textColor="@color/pink_200"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/testContent"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/pink_500"
-                android:gravity="center"
-                android:text="@string/question_content"
-                app:layout_constraintStart_toEndOf="@+id/type"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toEndOf="@+id/type"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.5">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_history_white"
+                    android:contentDescription="@string/icon" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:contentDescription="@string/icon"
+                    android:gravity="center"
+                    android:text="@string/question_content"
+                    android:textColor="@color/pink_200"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
@@ -74,12 +122,22 @@
                 android:layout_height="0dp"
                 android:background="@color/pink_800"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/button5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/testContent"
                 app:setAdapter="@{adapter}"
                 tools:listitem="@layout/chose_question_item" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/pink_800"
+                android:text="@string/next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
