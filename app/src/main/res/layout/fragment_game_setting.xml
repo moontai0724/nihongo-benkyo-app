@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="adapter"
             type="tw.edu.pu.nihongo_benkyo.ui.game.GameSettingAdapter" />
@@ -18,70 +19,69 @@
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/background"
             android:scaleType="matrix"
             android:src="@drawable/img_home"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/background" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/testContent"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:background="@color/pink_500"
-            app:layout_constraintEnd_toStartOf="@+id/imageView4"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/type"
-            app:layout_constraintTop_toTopOf="@+id/type">
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.8"
+            tools:context=".ui.game.GameSettingFragment">
 
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/question_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/type"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="180dp"
-            android:background="@color/pink_800"
-            app:layout_constraintEnd_toStartOf="@+id/testContent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/type"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/pink_800"
+                android:gravity="center"
                 android:text="@string/question_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <TextView
+                android:id="@+id/testContent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/pink_500"
+                android:gravity="center"
+                android:text="@string/question_content"
+                app:layout_constraintStart_toEndOf="@+id/type"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/pink_800"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/testContent"
+                app:setAdapter="@{adapter}"
+                tools:listitem="@layout/chose_question_item" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:background="@color/pink_800"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toStartOf="@+id/imageView4"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/type"
-            app:setAdapter="@{adapter}"
-            tools:listitem="@layout/chose_question_item" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
