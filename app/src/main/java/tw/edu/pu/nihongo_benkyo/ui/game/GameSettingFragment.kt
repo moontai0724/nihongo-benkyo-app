@@ -19,20 +19,28 @@ class GameSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val typeArr =  ArrayList(listOf(*resources.getStringArray(R.array.question_type)))
-        val contentArr =  ArrayList(listOf(*resources.getStringArray(R.array.question_content)))
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         dataBinding = FragmentGameSettingBinding.inflate(inflater, container, false)
         adapter = GameSettingAdapter()
         dataBinding.adapter = adapter
-        gameViewModel.setData(typeArr)
+        gameViewModel.getType()
         dataBinding.type.setOnClickListener {
-            gameViewModel.setData(typeArr)
-            dataBinding.recycler.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink_800))
+            gameViewModel.getType()
+            dataBinding.recycler.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.pink_800
+                )
+            )
         }
         dataBinding.testContent.setOnClickListener {
-            gameViewModel.setData(contentArr)
-            dataBinding.recycler.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink_500))
+            gameViewModel.getTheme()
+            dataBinding.recycler.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.pink_500
+                )
+            )
         }
         return dataBinding.root
     }

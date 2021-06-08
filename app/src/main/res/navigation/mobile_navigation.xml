@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="tw.edu.pu.nihongo_benkyo.ui.game.HomeFragment"
-        android:label="@string/menu_game"
-        tools:layout="@layout/fragment_home" >
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_gameChoseFragment"
             app:destination="@id/nav_game" />
@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/nav_game"
         android:name="tw.edu.pu.nihongo_benkyo.ui.game.GameSettingFragment"
-        android:label="GameChoseFragment" />
+        android:label="@string/menu_game" />
 
 </navigation>
