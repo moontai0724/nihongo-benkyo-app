@@ -23,9 +23,19 @@
         android:name="tw.edu.pu.nihongo_benkyo.ui.history.HistoryFragment"
         android:label="@string/menu_history"
         tools:layout="@layout/fragment_history" />
+
     <fragment
         android:id="@+id/nav_game"
         android:name="tw.edu.pu.nihongo_benkyo.ui.game.GameSettingFragment"
-        android:label="@string/menu_game" />
+        android:label="@string/menu_game"
+        tools:layout="@layout/fragment_game_setting" >
+        <action
+            android:id="@+id/action_nav_game_to_gamingSelectionFragment"
+            app:destination="@id/gamingSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gamingSelectionFragment"
+        android:name="tw.edu.pu.nihongo_benkyo.ui.game.GamingSelectionFragment"
+        tools:layout="@layout/fragment_gaming_selection" />
 
 </navigation>

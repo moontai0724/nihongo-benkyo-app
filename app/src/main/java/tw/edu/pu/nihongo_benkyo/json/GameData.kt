@@ -1,7 +1,7 @@
 package tw.edu.pu.nihongo_benkyo.json
 
 data class GameData (
-    val types: List<String>,
+    val types: List<Tag>,
     val tags: List<Tag>,
     val questions: List<Question>
 )

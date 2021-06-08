@@ -12,11 +12,11 @@ import tw.edu.pu.nihongo_benkyo.json.Tag
 class Repository {
     private var retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://gist.githubusercontent.com/moontai0724/")
+        .baseUrl("https://ts1.cmrdb.cs.pu.edu.tw/~moontai0724/")
         .build()
 
-    fun getType(completion: (List<String>) -> Unit) {
-        retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData>{
+    fun getType(completion: (List<Tag>) -> Unit) {
+        retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData> {
             override fun onResponse(call: Call<GameData>, response: Response<GameData>) {
                 completion(response.body()!!.types)
             }
@@ -29,7 +29,7 @@ class Repository {
     }
 
     fun getTag(completion: (List<Tag>) -> Unit) {
-        retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData>{
+        retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData> {
             override fun onResponse(call: Call<GameData>, response: Response<GameData>) {
                 completion(response.body()!!.tags)
             }
@@ -41,10 +41,14 @@ class Repository {
         })
     }
 
-    fun getQuestion(completion: (List<Question>) -> Unit) {
-        retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData>{
+    fun getQuestion(type: String, completion: (List<Question>) -> Unit) {
+        retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData> {
             override fun onResponse(call: Call<GameData>, response: Response<GameData>) {
-                completion(response.body()!!.questions)
+                var arr: List<Question> = ArrayList()
+                response.body()!!.questions.forEach { question ->
+                    if (question.type.contains(type))
+                        arr = arr + question
+                }
             }
 
             override fun onFailure(call: Call<GameData>, t: Throwable) {

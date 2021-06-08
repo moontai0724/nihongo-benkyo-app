@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentGameSettingBinding
-import java.util.*
 
 class GameSettingFragment : Fragment() {
     private lateinit var gameViewModel: GameViewModel
@@ -19,12 +19,12 @@ class GameSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         dataBinding = FragmentGameSettingBinding.inflate(inflater, container, false)
-        adapter = GameSettingAdapter()
-        dataBinding.adapter = adapter
         gameViewModel.getType()
         dataBinding.type.setOnClickListener {
+            gameViewModel.single = true
             gameViewModel.getType()
             dataBinding.recycler.setBackgroundColor(
                 ContextCompat.getColor(
@@ -33,7 +33,9 @@ class GameSettingFragment : Fragment() {
                 )
             )
         }
+
         dataBinding.testContent.setOnClickListener {
+            gameViewModel.single = false
             gameViewModel.getTheme()
             dataBinding.recycler.setBackgroundColor(
                 ContextCompat.getColor(
@@ -42,6 +44,10 @@ class GameSettingFragment : Fragment() {
                 )
             )
         }
+        dataBinding.next.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_game_to_gamingSelectionFragment)
+        }
+
         return dataBinding.root
     }
 
@@ -49,6 +55,8 @@ class GameSettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
         gameViewModel.arr.observe(viewLifecycleOwner, {
+            adapter = GameSettingAdapter(requireActivity(), gameViewModel.single)
+            dataBinding.adapter = adapter
             adapter.setData(it)
         })
     }
