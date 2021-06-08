@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#F8ECEC</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="pink_200">#F8ECEC</color>
     <color name="pink_500">#EC808D</color>
     <color name="pink_800">#C37278</color>
+
+    <color name="green_200">#ECF8EC</color>
+    <color name="green_500">#80EC8D</color>
+    <color name="green_800">#72C378</color>
+
+    <color name="pink_200_75a">#BFF8ECEC</color>
 </resources>
