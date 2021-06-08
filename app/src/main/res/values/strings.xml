@@ -26,6 +26,9 @@
     <string name="question_content">測驗內容</string>
     <string name="icon">icon</string>
     <string name="submit">送出</string>
+    <string name="replay">重玩</string>
+    <string name="inspect">詳細</string>
+    <string name="correct_amount">正確數</string>
     <string-array name="question_type">
         <item>問答</item>
         <item>填空</item>
