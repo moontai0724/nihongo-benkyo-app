@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="data"
+            type="tw.edu.pu.nihongo_benkyo.model.database.HistoryDetailAndQuestion" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,6 +29,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textSize="22sp"
+            android:text="@{data.question.question}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +55,7 @@
                 android:backgroundTint="@color/white"
                 android:enabled="false"
                 android:textAllCaps="false"
+                android:text="@{data.question.option1}"
                 app:layout_constraintBottom_toTopOf="@+id/option2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +70,7 @@
                 android:backgroundTint="@color/white"
                 android:enabled="false"
                 android:textAllCaps="false"
+                android:text="@{data.question.option2}"
                 app:layout_constraintBottom_toTopOf="@+id/option3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +85,7 @@
                 android:backgroundTint="@color/white"
                 android:enabled="false"
                 android:textAllCaps="false"
+                android:text="@{data.question.option3}"
                 app:layout_constraintBottom_toTopOf="@+id/option4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +100,7 @@
                 android:backgroundTint="@color/white"
                 android:enabled="false"
                 android:textAllCaps="false"
+                android:text="@{data.question.option4}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

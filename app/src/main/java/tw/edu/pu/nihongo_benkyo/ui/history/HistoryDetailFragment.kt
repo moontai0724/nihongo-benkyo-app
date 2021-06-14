@@ -23,6 +23,7 @@ class HistoryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val historyId = arguments?.getInt("historyId")!!
         viewModel = HistoryViewModel()
         adapter = HistoryDetailAdapter(1, viewModel)
         dataBinding.adapter = adapter

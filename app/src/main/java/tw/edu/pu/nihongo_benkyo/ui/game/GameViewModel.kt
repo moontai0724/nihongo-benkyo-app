@@ -6,14 +6,12 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.model.database.Type
 import tw.edu.pu.nihongo_benkyo.model.database.Tag
 import tw.edu.pu.nihongo_benkyo.model.Repository
 import tw.edu.pu.nihongo_benkyo.model.database.Question
 import kotlin.collections.ArrayList
-import kotlin.math.sin
 
 class GameViewModel : ViewModel() {
     private val repository = Repository()

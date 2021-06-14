@@ -3,11 +3,16 @@ package tw.edu.pu.nihongo_benkyo.ui.history
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import tw.edu.pu.nihongo_benkyo.databinding.*
+import tw.edu.pu.nihongo_benkyo.model.database.HistoryDetailAndQuestion
+import tw.edu.pu.nihongo_benkyo.model.database.HistoryInfo
 
 //define type 0 -> input  1-> selection
 class HistoryDetailAdapter(val type:Int, val viewModel: HistoryViewModel) : RecyclerView.Adapter<HistoryDetailViewHolder>(){
+    var historyDetail: List<HistoryDetailAndQuestion> = ArrayList()
+    lateinit var historyDetailInfo: HistoryInfo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryDetailViewHolder {
         val info = HistorySingleInformationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,7 +31,11 @@ class HistoryDetailAdapter(val type:Int, val viewModel: HistoryViewModel) : Recy
     }
 
     override fun onBindViewHolder(holder: HistoryDetailViewHolder, position: Int) {
-
+        if (position == 0){
+            holder.setInfo(historyDetailInfo)
+        }else{
+            holder.setListData(historyDetail[position-1])
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -37,13 +46,19 @@ class HistoryDetailAdapter(val type:Int, val viewModel: HistoryViewModel) : Recy
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return historyDetail.size + 1
     }
+
+    fun setData(list: List<HistoryDetailAndQuestion>, info: HistoryInfo){
+        historyDetail = list
+        historyDetailInfo = info
+    }
+
 }
 class HistoryDetailViewHolder:
     RecyclerView.ViewHolder {
 
-    val binding: Any
+    var binding: Any
     constructor(bind: HistorySingleInformationItemBinding) : super(bind.root) {
         binding = bind
     }
@@ -52,5 +67,21 @@ class HistoryDetailViewHolder:
     }
     constructor(bind: HistorySingleSelectionItemBinding) : super(bind.root) {
         binding = bind
+    }
+
+    fun setInfo(info: HistoryInfo){
+        val bind = binding as HistorySingleInformationItemBinding
+        bind.historyInfo = info
+        bind.executePendingBindings()
+    }
+
+    fun setListData(data: HistoryDetailAndQuestion){
+        if (binding is HistorySingleInputItemBinding){
+            val bind = binding as HistorySingleInputItemBinding
+            bind.data = data
+        }else if (binding is HistorySingleSelectionItemBinding){
+            val bind = binding as HistorySingleSelectionItemBinding
+            bind.data = data
+        }
     }
 }

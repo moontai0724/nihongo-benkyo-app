@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import tw.edu.pu.nihongo_benkyo.json.GameData
 import tw.edu.pu.nihongo_benkyo.json.Question
-import tw.edu.pu.nihongo_benkyo.json.Tag
+import tw.edu.pu.nihongo_benkyo.json.Property
 
 class Repository {
     private var retrofit: Retrofit = Retrofit.Builder()
@@ -15,7 +15,7 @@ class Repository {
         .baseUrl("https://ts1.cmrdb.cs.pu.edu.tw/~moontai0724/")
         .build()
 
-    fun getType(completion: (List<Tag>) -> Unit) {
+    fun getType(completion: (List<Property>) -> Unit) {
         retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData> {
             override fun onResponse(call: Call<GameData>, response: Response<GameData>) {
                 completion(response.body()!!.types)
@@ -28,7 +28,7 @@ class Repository {
         })
     }
 
-    fun getTag(completion: (List<Tag>) -> Unit) {
+    fun getTag(completion: (List<Property>) -> Unit) {
         retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData> {
             override fun onResponse(call: Call<GameData>, response: Response<GameData>) {
                 completion(response.body()!!.tags)
@@ -41,12 +41,12 @@ class Repository {
         })
     }
 
-    fun getQuestion(type: String, completion: (List<Question>) -> Unit) {
+    fun getQuestion(type: Int, completion: (List<Question>) -> Unit) {
         retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData> {
             override fun onResponse(call: Call<GameData>, response: Response<GameData>) {
                 var arr: List<Question> = ArrayList()
                 response.body()!!.questions.forEach { question ->
-                    if (question.type.contains(type))
+                    if (question.types.contains(type))
                         arr = arr + question
                 }
             }

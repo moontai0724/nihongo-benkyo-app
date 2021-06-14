@@ -65,7 +65,7 @@ interface SqlDao {
     suspend fun insertHistory(history: History): Long
 
     @Query("SELECT * FROM `history`")
-    suspend fun getAllHistory(): List<History>
+    suspend fun getAllHistory(): List<HistoryInfo>
 
     @Transaction
     @Query("SELECT * FROM `history` WHERE `id` = :history_id")

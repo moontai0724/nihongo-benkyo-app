@@ -26,5 +26,8 @@ class AllHistoryFragment : Fragment() {
         viewModel = HistoryViewModel()
         adapter = AllHistoryAdapter(viewModel)
         binding.adapter = adapter
+        viewModel.allHistory.observe(viewLifecycleOwner, {
+            adapter.setHistory(it)
+        })
     }
 }
