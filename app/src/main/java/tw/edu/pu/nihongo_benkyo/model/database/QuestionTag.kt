@@ -3,7 +3,7 @@ package tw.edu.pu.nihongo_benkyo.model.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.Index
 
 @Entity(
     tableName = "question_tag",
@@ -20,12 +20,12 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    primaryKeys = ["question_id", "tag_id"]
+    primaryKeys = ["question_id", "tag_id"],
+    indices = [Index(value = ["tag_id"])]
 )
 data class QuestionTag (
     @ColumnInfo(name = "question_id")
     var questionId: Int,
-
     @ColumnInfo(name = "tag_id")
     var tagId: Int
 )

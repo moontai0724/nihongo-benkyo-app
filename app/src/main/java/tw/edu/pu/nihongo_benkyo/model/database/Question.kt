@@ -8,25 +8,25 @@ import androidx.room.PrimaryKey
 data class Question(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id: Int,
+    var id: Long,
 
     @ColumnInfo(name = "question")
     var question: String,
 
     @ColumnInfo(name = "option_1")
-    var option1: String,
+    var option1: String?,
 
     @ColumnInfo(name = "option_2")
-    var option2: String,
+    var option2: String?,
 
     @ColumnInfo(name = "option_3")
-    var option3: String,
+    var option3: String?,
 
     @ColumnInfo(name = "option_4")
-    var option4: String,
+    var option4: String?,
 
     @ColumnInfo(name = "answer")
-    var answer: String,
+    var answer: Int?,
 
     @ColumnInfo(name = "validation")
     var validation: String

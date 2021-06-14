@@ -1,9 +1,6 @@
 package tw.edu.pu.nihongo_benkyo.model.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(
     tableName = "history",
@@ -14,7 +11,8 @@ import androidx.room.PrimaryKey
             childColumns = arrayOf("type_id"),
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["type_id"])]
 )
 data class History(
     @PrimaryKey(autoGenerate = true)
@@ -33,3 +31,18 @@ data class History(
     @ColumnInfo(name = "total_correct_amount")
     var totalCorrectAmount: String
 )
+
+class HistoryInfo {
+    @Embedded
+    var history: History? = null
+
+    @Relation(parentColumn = "type_id", entityColumn = "id")
+    var type: Type? = null
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "id",
+        associateBy = Junction(value = HistoryTag::class, parentColumn = "history_id", entityColumn = "tag_id")
+    )
+    var tags: List<Tag>? = null
+}
