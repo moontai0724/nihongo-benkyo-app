@@ -25,5 +25,11 @@ data class History(
     var typeId: Int,
 
     @ColumnInfo(name = "time")
-    var time: String
+    var time: String,
+
+    @ColumnInfo(name = "total_question_amount")
+    var totalQuestionAmount: String,
+
+    @ColumnInfo(name = "total_correct_amount")
+    var totalCorrectAmount: String
 )
