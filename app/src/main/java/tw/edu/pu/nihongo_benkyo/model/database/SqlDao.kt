@@ -1,19 +1,19 @@
 package tw.edu.pu.nihongo_benkyo.model.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface SqlDao {
 
     // Question
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertQuestion(question: Question)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertQuestion(question: Question): Long
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertQuestions(question: List<Question>): List<Long>
 
     @Query("SELECT * FROM `question`")
-    fun getAllQuestion()
+    suspend fun getAllQuestion(): List<Question>
 
     @Query(
         "SELECT DISTINCT " +
@@ -30,55 +30,52 @@ interface SqlDao {
                 " LEFT JOIN `question_type` ON `question`.`id` = `question_type`.`question_id`" +
                 " WHERE `type_id` = :typeId AND `tag_id` IN (:tagIds)"
     )
-    fun getQuestionsByTypeAndTag(typeId: Int, tagIds: String)
+    suspend fun getQuestionsByTypeAndTag(typeId: Int, tagIds: String): List<Question>
 
     // question-type
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertQuestionType(relation: QuestionType)
+    suspend fun insertQuestionType(relation: QuestionType): Long
 
     // type
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertType(type: Type)
+    suspend fun insertType(type: Type): Long
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertTypes(type: List<Type>): List<Long>
 
     @Query("SELECT * FROM `type`")
-    fun getAllType()
+    suspend fun getAllType(): List<Type>
 
     // question-tag
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertQuestionTag(relation: QuestionTag)
+    suspend fun insertQuestionTag(relation: QuestionTag): Long
 
     // tag
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertTag(tag: Tag)
+    suspend fun insertTag(tag: Tag): Long
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertTags(tag: List<Tag>): List<Long>
 
     @Query("SELECT * FROM `tag`")
-    fun getAllTag()
+    suspend fun getAllTag(): List<Tag>
 
     // history
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertHistory(history: History)
+    suspend fun insertHistory(history: History): Long
 
     @Query("SELECT * FROM `history`")
-    fun getAllHistory()
+    suspend fun getAllHistory(): List<History>
 
+    @Transaction
     @Query("SELECT * FROM `history` WHERE `id` = :history_id")
-    fun getHistory(history_id: Int)
-
-    // history-tag
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertHistoryTag(relation: HistoryTag)
-
-    @Query("SELECT * FROM `history_tag` WHERE `history_id` = :history_id")
-    fun getHistoryTag(history_id: Int)
+    suspend fun getHistory(history_id: Int): HistoryInfo
 
     // history-detail
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertHistoryDetails(details: List<HistoryDetail>)
+    suspend fun insertHistoryDetails(details: List<HistoryDetail>): List<Long>
 
-    @Query(
-        "SELECT * FROM `history_detail`" +
-                " LEFT JOIN `question` ON `history_detail`.`question_id` = `question`.`id`" +
-                " WHERE `history_id` = :history_id"
-    )
-    fun getHistoryDetails(history_id: Int)
+    @Transaction
+    @Query("SELECT * FROM `history_detail` WHERE `history_id` = :history_id")
+    suspend fun getHistoryDetails(history_id: Int): List<HistoryDetailAndQuestion>
 }

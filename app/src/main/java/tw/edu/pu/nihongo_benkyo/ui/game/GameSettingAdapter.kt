@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tw.edu.pu.nihongo_benkyo.databinding.ChoseQuestionItemBinding
 import tw.edu.pu.nihongo_benkyo.databinding.ChoseTypeItemBinding
-import tw.edu.pu.nihongo_benkyo.json.Tag
+import tw.edu.pu.nihongo_benkyo.json.Property
 import kotlin.properties.Delegates
 
 class GameSettingAdapter(
@@ -18,7 +18,7 @@ class GameSettingAdapter(
 ) :
     RecyclerView.Adapter<GameChoseViewHolder>() {
 
-    private var dataArr: List<Tag> = ArrayList()
+    private var dataArr: List<Property> = ArrayList()
     private var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
         notifyItemChanged(oldPos)
         notifyItemChanged(newPos)
@@ -72,7 +72,7 @@ class GameSettingAdapter(
         return dataArr.size
     }
 
-    fun setData(arr: List<Tag>) {
+    fun setData(arr: List<Property>) {
         dataArr = arr
         notifyDataSetChanged()
 
@@ -95,7 +95,7 @@ class GameChoseViewHolder :
         binding = questionBind
     }
 
-    fun setBind(select: Boolean, tag: Tag) {
+    fun setBind(select: Boolean, tag: Property) {
         if (binding is ChoseQuestionItemBinding) {
             val bind = binding as ChoseQuestionItemBinding
             bind.checkBox.text = tag.chinese

@@ -1,9 +1,6 @@
 package tw.edu.pu.nihongo_benkyo.model.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(
     tableName = "history_tag",
@@ -20,7 +17,9 @@ import androidx.room.PrimaryKey
             childColumns = arrayOf("tag_id"),
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    primaryKeys = ["history_id", "tag_id"],
+    indices = [Index(value = ["tag_id"])]
 )
 data class HistoryTag(
     @ColumnInfo(name = "history_id")

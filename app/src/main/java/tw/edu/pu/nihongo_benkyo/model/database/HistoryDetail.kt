@@ -1,9 +1,6 @@
 package tw.edu.pu.nihongo_benkyo.model.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(
     tableName = "history_detail",
@@ -21,7 +18,8 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    primaryKeys = ["history_id", "question_id"]
+    primaryKeys = ["history_id", "question_id"],
+    indices = [Index(value = ["question_id"])]
 )
 data class HistoryDetail(
     @ColumnInfo(name = "history_id")
@@ -36,3 +34,11 @@ data class HistoryDetail(
     @ColumnInfo(name = "correctness")
     var correctness: Boolean
 )
+
+class HistoryDetailAndQuestion {
+    @Embedded
+    var detail: HistoryDetail? = null
+
+    @Relation(parentColumn =  "question_id", entityColumn = "id")
+    var question: Question? = null
+}
