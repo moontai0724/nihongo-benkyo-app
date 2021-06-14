@@ -3,6 +3,7 @@ package tw.edu.pu.nihongo_benkyo.model.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import tw.edu.pu.nihongo_benkyo.json.Question
 
 @Entity(tableName = "question")
 data class Question(
@@ -30,4 +31,15 @@ data class Question(
 
     @ColumnInfo(name = "validation")
     var validation: String
-)
+) {
+    constructor(o: Question) : this(
+        o.id,
+        o.question,
+        o.option_1,
+        o.option_2,
+        o.option_3,
+        o.option_4,
+        o.answer,
+        o.validation
+    )
+}

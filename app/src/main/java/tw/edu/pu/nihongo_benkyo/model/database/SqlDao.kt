@@ -33,35 +33,35 @@ interface SqlDao {
     suspend fun getQuestionsByTypeAndTag(typeId: Int, tagIds: String): List<Question>
 
     // question-type
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertQuestionType(relation: QuestionType): Long
 
     // type
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertType(type: Type): Long
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTypes(type: List<Type>): List<Long>
 
     @Query("SELECT * FROM `type`")
     suspend fun getAllType(): List<Type>
 
     // question-tag
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertQuestionTag(relation: QuestionTag): Long
 
     // tag
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTag(tag: Tag): Long
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTags(tag: List<Tag>): List<Long>
 
     @Query("SELECT * FROM `tag`")
     suspend fun getAllTag(): List<Tag>
 
     // history
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertHistory(history: History): Long
 
     @Query("SELECT * FROM `history`")
@@ -72,7 +72,7 @@ interface SqlDao {
     suspend fun getHistory(history_id: Int): HistoryInfo
 
     // history-detail
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertHistoryDetails(details: List<HistoryDetail>): List<Long>
 
     @Transaction
