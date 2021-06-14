@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tw.edu.pu.nihongo_benkyo.databinding.ChoseQuestionItemBinding
 import tw.edu.pu.nihongo_benkyo.databinding.ChoseTypeItemBinding
-import tw.edu.pu.nihongo_benkyo.json.Tag
+import tw.edu.pu.nihongo_benkyo.model.database.Tag
+import tw.edu.pu.nihongo_benkyo.model.database.Type
 import kotlin.properties.Delegates
 
 class GameSettingAdapter(
@@ -18,7 +19,9 @@ class GameSettingAdapter(
 ) :
     RecyclerView.Adapter<GameChoseViewHolder>() {
 
-    private var dataArr: List<Tag> = ArrayList()
+    private var tagArr: List<Tag> = ArrayList()
+    private var typeArr: List<Type> = ArrayList()
+
     private var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
         notifyItemChanged(oldPos)
         notifyItemChanged(newPos)
@@ -39,24 +42,23 @@ class GameSettingAdapter(
 
     override fun onBindViewHolder(holder: GameChoseViewHolder, position: Int) {
         if (holder.binding is ChoseQuestionItemBinding) {
-            holder.setBind(false, dataArr[position])
+            holder.setTag(tagArr[position])
             val bind = holder.binding as ChoseQuestionItemBinding
-            viewModel.tags.forEach {
-                if (it == dataArr[position].chinese)
+            viewModel.selectTag.forEach {
+                if (it == tagArr[position].chinese)
                     bind.checkBox.isChecked = true
             }
-
             bind.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked)
-                    if (!viewModel.tags.contains(buttonView.text.toString()))
-                        viewModel.tags = viewModel.tags + buttonView.text.toString()
+                    if (!viewModel.selectTag.contains(buttonView.text.toString()))
+                        viewModel.selectTag = viewModel.selectTag + buttonView.text.toString()
                     else
-                        viewModel.tags.drop(viewModel.tags.indexOf(buttonView.text.toString()))
+                        viewModel.selectTag.drop(viewModel.selectTag.indexOf(buttonView.text.toString()))
             }
         } else if (holder.binding is ChoseTypeItemBinding) {
-            holder.setBind(selectedPosition == position, dataArr[position])
+            holder.setType(selectedPosition == position, typeArr[position])
             val bind = holder.binding as ChoseTypeItemBinding
-            if (viewModel.type == dataArr[position].chinese){
+            if (viewModel.type == typeArr[position].chinese) {
                 Handler(Looper.getMainLooper()).postDelayed({
                     bind.radioButton.isChecked = true
                 }, 0)
@@ -69,16 +71,21 @@ class GameSettingAdapter(
     }
 
     override fun getItemCount(): Int {
-        return dataArr.size
+        return if (single)
+            typeArr.size
+        else
+            tagArr.size
     }
 
-    fun setData(arr: List<Tag>) {
-        dataArr = arr
+    fun setTagData(arr: List<Tag>) {
+        tagArr = arr
         notifyDataSetChanged()
-
     }
 
-
+    fun setTypeData(arr: List<Type>) {
+        typeArr = arr
+        notifyDataSetChanged()
+    }
 }
 
 class GameChoseViewHolder :
@@ -95,18 +102,18 @@ class GameChoseViewHolder :
         binding = questionBind
     }
 
-    fun setBind(select: Boolean, tag: Tag) {
-        if (binding is ChoseQuestionItemBinding) {
-            val bind = binding as ChoseQuestionItemBinding
-            bind.checkBox.text = tag.chinese
+    fun setTag(tag: Tag) {
+        val bind = binding as ChoseQuestionItemBinding
+        bind.checkBox.text = tag.chinese
+        bind.executePendingBindings()
+    }
+
+    fun setType(select: Boolean, type: Type) {
+        val bind = binding as ChoseTypeItemBinding
+        bind.radioButton.text = type.chinese
+        Handler(Looper.getMainLooper()).postDelayed({
+            bind.radioButton.isChecked = select
             bind.executePendingBindings()
-        } else if (binding is ChoseTypeItemBinding) {
-            val bind = binding as ChoseTypeItemBinding
-            bind.radioButton.text = tag.chinese
-            Handler(Looper.getMainLooper()).postDelayed({
-                bind.radioButton.isChecked = select
-                bind.executePendingBindings()
-            }, 0)
-        }
+        }, 0)
     }
 }

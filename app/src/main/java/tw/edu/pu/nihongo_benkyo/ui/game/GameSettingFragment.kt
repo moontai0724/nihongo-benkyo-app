@@ -21,13 +21,11 @@ class GameSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         dataBinding = FragmentGameSettingBinding.inflate(inflater, container, false)
-        gameViewModel.getType()
+        //取資料
         dataBinding.type.setOnClickListener {
             gameViewModel.single = true
-            gameViewModel.getType()
             dataBinding.recycler.setBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -38,7 +36,6 @@ class GameSettingFragment : Fragment() {
 
         dataBinding.testContent.setOnClickListener {
             gameViewModel.single = false
-            gameViewModel.getTheme()
             dataBinding.recycler.setBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -49,7 +46,7 @@ class GameSettingFragment : Fragment() {
         dataBinding.next.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("type", gameViewModel.type)
-            bundle.putStringArrayList("tags", gameViewModel.tags as ArrayList<String>)
+            bundle.putStringArrayList("tags", gameViewModel.selectTag as ArrayList<String>)
             when(gameViewModel.type ){
                 "選擇題" -> findNavController().navigate(R.id.action_nav_game_to_gamingSelectionFragment, bundle)
                 "" -> Toast.makeText(requireContext(), "有選擇沒選到喔", Toast.LENGTH_LONG).show()
@@ -64,11 +61,18 @@ class GameSettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
-        gameViewModel.arr.observe(viewLifecycleOwner, {
+        gameViewModel.tags.observe(viewLifecycleOwner, {
             adapter = GameSettingAdapter(requireActivity(), gameViewModel, gameViewModel.single)
             dataBinding.adapter = adapter
-            adapter.setData(it)
+            adapter.setTagData(it)
         })
+
+        gameViewModel.types.observe(viewLifecycleOwner, {
+            adapter = GameSettingAdapter(requireActivity(), gameViewModel, gameViewModel.single)
+            dataBinding.adapter = adapter
+            adapter.setTypeData(it)
+        })
+
     }
 
     override fun onResume() {

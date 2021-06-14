@@ -17,7 +17,7 @@ class GamingInputFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentGamingInputBinding.inflate(inflater, container, false)
-        return  dataBinding.root
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
