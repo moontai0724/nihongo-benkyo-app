@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tw.edu.pu.nihongo_benkyo.ui.game.GameViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/question_input"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
@@ -60,10 +67,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView">
+                app:layout_constraintTop_toBottomOf="@+id/question_input">
 
                 <EditText
-                    android:id="@+id/editTextTextMultiLine"
+                    android:id="@+id/input_answer"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="@drawable/background_white_bordered"
@@ -80,6 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:backgroundTint="@color/pink_500"
+                    android:onClick="@{viewModel.inputBtnClick}"
                     android:text="@string/submit"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"

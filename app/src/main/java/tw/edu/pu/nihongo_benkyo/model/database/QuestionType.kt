@@ -1,8 +1,6 @@
 package tw.edu.pu.nihongo_benkyo.model.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
+import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 
 @Entity(
@@ -18,11 +16,13 @@ import androidx.room.ForeignKey.CASCADE
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("type_id"),
             onDelete = CASCADE)
-    ]
+    ],
+    primaryKeys = ["question_id", "type_id"]
 )
 data class QuestionType (
     @ColumnInfo(name = "question_id")
     var questionId: Int,
+
     @ColumnInfo(name = "type_id")
     var typeId: Int
 )

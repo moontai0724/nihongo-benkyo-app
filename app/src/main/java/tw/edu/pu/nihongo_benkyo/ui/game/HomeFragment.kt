@@ -11,11 +11,7 @@ import tw.edu.pu.nihongo_benkyo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,7 +24,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_nav_home_to_gameChoseFragment)
         }
         _binding!!.history.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_home_to_nav_gallery)
+            findNavController().navigate(R.id.action_nav_home_to_allHistoryFragment)
         }
 
         return binding.root

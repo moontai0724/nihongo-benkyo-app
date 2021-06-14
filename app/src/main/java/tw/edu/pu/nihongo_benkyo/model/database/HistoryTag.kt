@@ -20,7 +20,8 @@ import androidx.room.PrimaryKey
             childColumns = arrayOf("tag_id"),
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    primaryKeys = ["history_id", "tag_id"]
 )
 data class HistoryTag(
     @ColumnInfo(name = "history_id")

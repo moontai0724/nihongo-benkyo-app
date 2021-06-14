@@ -71,4 +71,15 @@ class GameSettingFragment : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        val type = arguments?.getString("type")
+        val tags = arguments?.getStringArrayList("tags")
+        if (type != null && tags != null){
+            val bundle = Bundle()
+            bundle.putString("type", type)
+            bundle.putStringArrayList("tags", tags)
+            findNavController().navigate(R.id.action_nav_game_to_gamingSelectionFragment, bundle)
+        }
+    }
 }

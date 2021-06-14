@@ -5,26 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import tw.edu.pu.nihongo_benkyo.databinding.FragmentAllHistoryBinding
+import tw.edu.pu.nihongo_benkyo.R
+import tw.edu.pu.nihongo_benkyo.databinding.FragmentHistoryDetailBinding
 
-class AllHistoryFragment : Fragment() {
-
-    private lateinit var binding: FragmentAllHistoryBinding
-    private lateinit var adapter: AllHistoryAdapter
+class HistoryDetailFragment : Fragment() {
+    private lateinit var dataBinding: FragmentHistoryDetailBinding
+    private lateinit var adapter: HistoryDetailAdapter
     private lateinit var viewModel: HistoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAllHistoryBinding.inflate(inflater, container, false)
-        return binding.root
+        dataBinding = FragmentHistoryDetailBinding.inflate(inflater, container, false)
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = HistoryViewModel()
-        adapter = AllHistoryAdapter(viewModel)
-        binding.adapter = adapter
+        adapter = HistoryDetailAdapter(1, viewModel)
+        dataBinding.adapter = adapter
     }
 }
