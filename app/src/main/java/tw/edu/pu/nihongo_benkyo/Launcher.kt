@@ -20,6 +20,7 @@ class Launcher : AppCompatActivity() {
 
             val repository = Repository(this)
             repository.update {
+                progressDialog.dismiss()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
