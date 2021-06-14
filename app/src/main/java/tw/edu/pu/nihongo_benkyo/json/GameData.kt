@@ -8,15 +8,15 @@ data class GameData (
 
 data class Question (
     val id: Long,
-    val types: List<Int>,
-    val tags: List<Int>,
+    val types: List<Long>,
+    val tags: List<Long>,
     val question: String,
     val option_1: String? = null,
     val option_2: String? = null,
     val option_3: String? = null,
     val option_4: String? = null,
     val answer: Int? = null,
-    val validation: String
+    val validation: String?
 )
 
 data class Property (

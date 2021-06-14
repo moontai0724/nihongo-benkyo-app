@@ -17,10 +17,10 @@ import androidx.room.*
 data class History(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id: Int,
+    var id: Long?,
 
     @ColumnInfo(name = "type_id")
-    var typeId: Int,
+    var typeId: Long,
 
     @ColumnInfo(name = "time")
     var time: String,
@@ -41,6 +41,7 @@ class HistoryInfo {
 
     @Relation(
         parentColumn = "id",
+        entity = Tag::class,
         entityColumn = "id",
         associateBy = Junction(value = HistoryTag::class, parentColumn = "history_id", entityColumn = "tag_id")
     )

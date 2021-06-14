@@ -37,7 +37,6 @@ class GameSettingAdapter(
         else
             GameChoseViewHolder(questionBinding)
 
-
     }
 
     override fun onBindViewHolder(holder: GameChoseViewHolder, position: Int) {
@@ -48,13 +47,14 @@ class GameSettingAdapter(
                 if (it == tagArr[position].id)
                     bind.checkBox.isChecked = true
             }
-            bind.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            bind.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 val id = tagArr[position].id
-                if (isChecked)
+                if (isChecked){
                     if (!viewModel.selectTag.contains(id))
                         viewModel.selectTag = viewModel.selectTag + id
-                    else
-                        viewModel.selectTag.drop(viewModel.selectTag.indexOf(id))
+                }else{
+                    viewModel.selectTag = viewModel.selectTag.drop(viewModel.selectTag.indexOf(id))
+                }
             }
         } else if (holder.binding is ChoseTypeItemBinding) {
             holder.setType(selectedPosition == position, typeArr[position])

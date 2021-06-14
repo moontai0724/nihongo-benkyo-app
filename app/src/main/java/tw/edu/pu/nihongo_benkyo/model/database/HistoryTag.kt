@@ -23,8 +23,8 @@ import androidx.room.*
 )
 data class HistoryTag(
     @ColumnInfo(name = "history_id")
-    var id: Int,
+    var historyId: Long,
 
     @ColumnInfo(name = "tag_id")
-    var tagId: Int
+    var tagId: Long
 )

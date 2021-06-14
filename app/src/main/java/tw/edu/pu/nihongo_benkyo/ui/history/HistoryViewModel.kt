@@ -7,6 +7,9 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import tw.edu.pu.nihongo_benkyo.MainActivity
 import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.model.database.HistoryDetailAndQuestion
 import tw.edu.pu.nihongo_benkyo.model.database.HistoryInfo
@@ -19,6 +22,12 @@ class HistoryViewModel : ViewModel() {
     var historyDetail: MutableLiveData<List<HistoryDetailAndQuestion>> = MutableLiveData()
     var historyDetailInfo: MutableLiveData<HistoryInfo> = MutableLiveData()
 
+    fun getAllHistory(){
+        GlobalScope.launch {
+            allHistory.postValue(MainActivity.database.getAllHistory())
+        }
+    }
+
     fun allHistoryReplay(view: View){
         Navigation.findNavController(view).navigate(R.id.action_nav_history_to_nav_game)
         /*
@@ -30,9 +39,9 @@ class HistoryViewModel : ViewModel() {
         // action_gamingInputFragment_to_nav_history
     }
 
-    fun showHistoryDetail(view: View, historyId:Int){
+    fun showHistoryDetail(view: View, historyId:Long){
         val bundle = Bundle()
-        bundle.putInt("historyId", historyId)
+        bundle.putLong("historyId", historyId)
         Navigation.findNavController(view).navigate(R.id.action_allHistoryFragment_to_historyDetailFragment, bundle)
     }
 
@@ -47,13 +56,18 @@ class HistoryViewModel : ViewModel() {
         // action_historyDetailFragment_to_gamingSelectionFragment
     }
 
-    @BindingAdapter("setTags")
-    fun setTag(text: TextView, info:List<Tag>){
-        var str = info[0].chinese
-        info.forEach {
-            if (it.chinese != str)
-                str += ", ${it.chinese}"
+    companion object {
+        @JvmStatic
+        @BindingAdapter("setTags")
+        fun setTag(text: TextView, info:List<Tag>){
+            if (info.isNotEmpty()){
+                var str = info[0].chinese
+                info.forEach {
+                    if (it.chinese != str)
+                        str += ", ${it.chinese}"
+                }
+                text.text = str
+            }
         }
-        text.text = str
     }
 }

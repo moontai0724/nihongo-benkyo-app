@@ -30,7 +30,7 @@ data class Question(
     var answer: Int?,
 
     @ColumnInfo(name = "validation")
-    var validation: String
+    var validation: String?
 ) {
     constructor(o: Question) : this(
         o.id,

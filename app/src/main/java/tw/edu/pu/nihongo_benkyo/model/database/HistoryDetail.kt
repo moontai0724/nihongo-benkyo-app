@@ -23,10 +23,10 @@ import androidx.room.*
 )
 data class HistoryDetail(
     @ColumnInfo(name = "history_id")
-    var historyId: Int,
+    var historyId: Long,
 
     @ColumnInfo(name = "question_id")
-    var questionId: Int,
+    var questionId: Long,
 
     @ColumnInfo(name = "answer")
     var answer: String,

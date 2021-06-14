@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentHistoryDetailBinding
 
@@ -18,14 +19,15 @@ class HistoryDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentHistoryDetailBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(requireActivity()).get(HistoryViewModel::class.java)
+        val historyId = arguments?.getLong("historyId")!!
+        adapter = HistoryDetailAdapter(1, viewModel)
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val historyId = arguments?.getInt("historyId")!!
-        viewModel = HistoryViewModel()
-        adapter = HistoryDetailAdapter(1, viewModel)
+        dataBinding.lifecycleOwner = activity
         dataBinding.adapter = adapter
     }
 }

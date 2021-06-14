@@ -25,7 +25,7 @@ import androidx.room.Index
 )
 data class QuestionType (
     @ColumnInfo(name = "question_id")
-    var questionId: Int,
+    var questionId: Long,
     @ColumnInfo(name = "type_id")
-    var typeId: Int
+    var typeId: Long
 )

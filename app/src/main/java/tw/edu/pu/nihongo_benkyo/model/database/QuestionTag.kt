@@ -25,7 +25,7 @@ import androidx.room.Index
 )
 data class QuestionTag (
     @ColumnInfo(name = "question_id")
-    var questionId: Int,
+    var questionId: Long,
     @ColumnInfo(name = "tag_id")
-    var tagId: Int
+    var tagId: Long
 )

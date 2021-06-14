@@ -30,7 +30,7 @@ interface SqlDao {
                 " LEFT JOIN `question_type` ON `question`.`id` = `question_type`.`question_id`" +
                 " WHERE `type_id` = :typeId AND `tag_id` IN (:tagIds) ORDER BY random() LIMIT 10"
     )
-    suspend fun getQuestionsByTypeAndTag(typeId: Long, tagIds: String): List<Question>
+    suspend fun getQuestionsByTypeAndTag(typeId: Long, tagIds: List<Long>): List<Question>
 
     // question-type
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -64,12 +64,18 @@ interface SqlDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertHistory(history: History): Long
 
-    @Query("SELECT * FROM `history`")
+    @Update
+    suspend fun updateHistory(history: History): Int
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertHistoryTag(historyTag: HistoryTag): Long
+
+    @Query("SELECT * FROM `history` ORDER BY `id` DESC")
     suspend fun getAllHistory(): List<HistoryInfo>
 
     @Transaction
     @Query("SELECT * FROM `history` WHERE `id` = :history_id")
-    suspend fun getHistory(history_id: Int): HistoryInfo
+    suspend fun getHistory(history_id: Long): HistoryInfo
 
     // history-detail
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -77,5 +83,5 @@ interface SqlDao {
 
     @Transaction
     @Query("SELECT * FROM `history_detail` WHERE `history_id` = :history_id")
-    suspend fun getHistoryDetails(history_id: Int): List<HistoryDetailAndQuestion>
+    suspend fun getHistoryDetails(history_id: Long): List<HistoryDetailAndQuestion>
 }

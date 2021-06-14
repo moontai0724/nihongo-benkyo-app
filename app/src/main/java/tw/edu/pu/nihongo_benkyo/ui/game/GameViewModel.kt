@@ -1,9 +1,11 @@
 package tw.edu.pu.nihongo_benkyo.ui.game
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
@@ -11,9 +13,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tw.edu.pu.nihongo_benkyo.MainActivity
 import tw.edu.pu.nihongo_benkyo.R
-import tw.edu.pu.nihongo_benkyo.model.database.Question
-import tw.edu.pu.nihongo_benkyo.model.database.Tag
-import tw.edu.pu.nihongo_benkyo.model.database.Type
+import tw.edu.pu.nihongo_benkyo.model.database.*
+import java.sql.Timestamp
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
+import java.util.stream.Collectors
+import kotlin.collections.ArrayList
 
 class GameViewModel : ViewModel() {
     // game set
@@ -27,11 +34,10 @@ class GameViewModel : ViewModel() {
     // gaming
     private var index = 0
     var questions: MutableLiveData<List<Question>> = MutableLiveData()
-    var currentQuestion: MutableLiveData<Question> = MutableLiveData()
-
-    init {
-        index = 0
-    }
+    var currentQuestion: MutableLiveData<Question?> = MutableLiveData()
+    lateinit var history: History
+    var historyDetail: List<HistoryDetail> = ArrayList()
+    var correctCount = 0
 
     fun getTags() {
         GlobalScope.launch {
@@ -49,22 +55,37 @@ class GameViewModel : ViewModel() {
         this.single.postValue(single)
     }
 
-    fun getQuestion(type: Long, tags: String) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getQuestion(type: Long, tags: LongArray) {
+        index = 0
+        correctCount = 0
+        historyDetail = ArrayList()
+        answerInput.postValue("")
+        val ts = Timestamp(Date().time)
+        val time = LocalDateTime.ofInstant(ts.toInstant(), ZoneId.of("GMT+08:00"))
+        history = History(
+            null,
+            type,
+            time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+            "0",
+            "0"
+        )
         GlobalScope.launch {
-            questions.postValue(MainActivity.database.getQuestionsByTypeAndTag(type, tags))
+            history.id = MainActivity.database.insertHistory(history)
+            tags.forEach {
+                MainActivity.database.insertHistoryTag(HistoryTag(history.id!!, it))
+            }
+            val allQuestion = MainActivity.database.getQuestionsByTypeAndTag(type, tags.toList())
+            questions.postValue(allQuestion)
         }
     }
 
     fun settingComplete(view: View) {
-        var str = selectTag[0].toString()
-        selectTag.forEach {
-            if (str != it.toString())
-                str += ", $it"
-        }
 
         val bundle = Bundle()
         bundle.putLong("type", type)
-        bundle.putString("tags", str)
+        val longArrayTags = LongArray(selectTag.size, selectTag::get)
+        bundle.putLongArray("tags", longArrayTags)
         if (selectTag.isNotEmpty()) {
             when (type.toInt()) {
                 1 -> Navigation.findNavController(view)
@@ -78,24 +99,50 @@ class GameViewModel : ViewModel() {
     }
 
     fun selectionBtnClick(view: View, select: Int) {
-        // if 問題做完了
-        index++
-        if (index >= questions.value!!.size - 1) {
-            //利用select判斷對錯，新增歷史紀錄
+        val correct = currentQuestion.value?.answer == select
+        historyDetail = historyDetail + HistoryDetail(
+            history.id!!,
+            currentQuestion.value!!.id,
+            select.toString(),
+            correct
+        )
+        if (correct)
+            correctCount++
+        if (++index >= questions.value!!.size) {
+            history.totalCorrectAmount = correctCount.toString()
+            history.totalQuestionAmount = historyDetail.size.toString()
+            GlobalScope.launch {
+                MainActivity.database.updateHistory(history)
+                MainActivity.database.insertHistoryDetails(historyDetail)
+            }
             Navigation.findNavController(view)
                 .navigate(R.id.action_gamingSelectionFragment_to_nav_history)
-        } else
+        } else {
             currentQuestion.postValue(questions.value!![index])
-
+        }
     }
 
     fun inputBtnClick(view: View) {
-        index++
-        if (index >= questions.value!!.size - 1) {
-            //利用answerInput判斷對錯，新增歷史紀錄
+        val correct = currentQuestion.value?.validation == answerInput.value
+        historyDetail = historyDetail + HistoryDetail(
+            history.id!!,
+            currentQuestion.value!!.id,
+            answerInput.value!!,
+            correct
+        )
+        if (correct)
+            correctCount++
+        if (++index >= questions.value!!.size) {
+            history.totalCorrectAmount = correctCount.toString()
+            history.totalQuestionAmount = historyDetail.size.toString()
+            GlobalScope.launch {
+                MainActivity.database.updateHistory(history)
+                MainActivity.database.insertHistoryDetails(historyDetail)
+            }
             Navigation.findNavController(view)
                 .navigate(R.id.action_gamingInputFragment_to_nav_history)
-        } else
+        } else {
             currentQuestion.postValue(questions.value!![index])
+        }
     }
 }

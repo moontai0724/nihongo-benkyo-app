@@ -35,7 +35,6 @@
             app:layout_constraintEnd_toEndOf="@+id/imageView5"
             app:layout_constraintStart_toStartOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="@+id/imageView5"
-            app:setAdapter="@{adapter}"
-            tools:listitem="@layout/history_item" />
+            app:setAdapter="@{adapter}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

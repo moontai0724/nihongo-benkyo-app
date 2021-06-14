@@ -8,7 +8,7 @@ import tw.edu.pu.nihongo_benkyo.model.database.HistoryInfo
 
 class AllHistoryAdapter(val viewModel: HistoryViewModel) :
     RecyclerView.Adapter<AllHistoryViewHolder>() {
-    var allHistory: List<HistoryInfo> = ArrayList()
+    private var allHistory: List<HistoryInfo> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllHistoryViewHolder {
         val binding =

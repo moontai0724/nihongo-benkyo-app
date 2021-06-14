@@ -24,7 +24,6 @@ class Repository(val context: Context) {
                 GlobalScope.launch {
                     setDataIntoDatabase(body)
                 }.invokeOnCompletion {
-                    MyDatabase.getDatabase(context, GlobalScope).close()
                     completion(true)
                 }
             }
@@ -48,9 +47,9 @@ class Repository(val context: Context) {
                 continue
 
             for (typeId in it.types)
-                database.insertQuestionType(QuestionType(it.id.toInt(), typeId))
+                database.insertQuestionType(QuestionType(it.id, typeId))
             for (tagId in it.tags)
-                database.insertQuestionTag(QuestionTag(it.id.toInt(), tagId))
+                database.insertQuestionTag(QuestionTag(it.id, tagId))
         }
     }
 }
