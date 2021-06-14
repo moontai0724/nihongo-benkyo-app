@@ -16,6 +16,7 @@ class Launcher : AppCompatActivity() {
         bind = DataBindingUtil.setContentView(this, R.layout.activity_launcher)
         bind.start.setOnClickListener {
             val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("載入資料中...")
             progressDialog.show()
 
             val repository = Repository(this)
