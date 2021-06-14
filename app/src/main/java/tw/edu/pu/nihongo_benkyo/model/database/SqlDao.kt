@@ -28,9 +28,9 @@ interface SqlDao {
                 " FROM `question`" +
                 " LEFT JOIN `question_tag` ON `question`.`id` = `question_tag`.`question_id`" +
                 " LEFT JOIN `question_type` ON `question`.`id` = `question_type`.`question_id`" +
-                " WHERE `type_id` = :typeId AND `tag_id` IN (:tagIds)"
+                " WHERE `type_id` = :typeId AND `tag_id` IN (:tagIds) ORDER BY random() LIMIT 10"
     )
-    suspend fun getQuestionsByTypeAndTag(typeId: Int, tagIds: String): List<Question>
+    suspend fun getQuestionsByTypeAndTag(typeId: Long, tagIds: String): List<Question>
 
     // question-type
     @Insert(onConflict = OnConflictStrategy.IGNORE)

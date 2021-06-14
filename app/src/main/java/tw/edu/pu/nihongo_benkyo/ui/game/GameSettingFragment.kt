@@ -1,6 +1,7 @@
 package tw.edu.pu.nihongo_benkyo.ui.game
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ class GameSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        gameViewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
         dataBinding = FragmentGameSettingBinding.inflate(inflater, container, false)
         return dataBinding.root
     }
@@ -27,6 +28,7 @@ class GameSettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
+        dataBinding.viewModel = gameViewModel
         gameViewModel.single.postValue(true)
         gameViewModel.single.observe(viewLifecycleOwner, {
             adapter = GameSettingAdapter(requireActivity(), gameViewModel, it)
@@ -35,24 +37,28 @@ class GameSettingFragment : Fragment() {
                 dataBinding.recycler.setBackgroundColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        R.color.pink_500
+                        R.color.pink_800
                     )
                 )
-                // get tag Data from database
-                //adapter.setTagData()
+                gameViewModel.getType()
             }
             else{
                 dataBinding.recycler.setBackgroundColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        R.color.pink_800
+                        R.color.pink_500
                     )
                 )
-                // get type Data from database
-                //adapter.setTypeData()
+                gameViewModel.getTags()
             }
+        })
 
+        gameViewModel.types.observe(viewLifecycleOwner, {
+            adapter.setTypeData(it)
+        })
 
+        gameViewModel.tags.observe(viewLifecycleOwner, {
+            adapter.setTagData(it)
         })
 
     }
@@ -66,6 +72,9 @@ class GameSettingFragment : Fragment() {
             bundle.putString("type", type)
             bundle.putStringArrayList("tags", tags)
             findNavController().navigate(R.id.action_nav_game_to_gamingSelectionFragment, bundle)
+        }else{
+            gameViewModel.selectTag = ArrayList()
+            gameViewModel.type = 0
         }
     }
 }

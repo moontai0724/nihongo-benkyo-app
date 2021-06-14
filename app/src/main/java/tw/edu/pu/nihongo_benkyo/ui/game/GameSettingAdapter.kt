@@ -45,27 +45,29 @@ class GameSettingAdapter(
             holder.setTag(tagArr[position])
             val bind = holder.binding as ChoseQuestionItemBinding
             viewModel.selectTag.forEach {
-                if (it == tagArr[position].chinese)
+                if (it == tagArr[position].id)
                     bind.checkBox.isChecked = true
             }
             bind.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+                val id = tagArr[position].id
                 if (isChecked)
-                    if (!viewModel.selectTag.contains(buttonView.text.toString()))
-                        viewModel.selectTag = viewModel.selectTag + buttonView.text.toString()
+                    if (!viewModel.selectTag.contains(id))
+                        viewModel.selectTag = viewModel.selectTag + id
                     else
-                        viewModel.selectTag.drop(viewModel.selectTag.indexOf(buttonView.text.toString()))
+                        viewModel.selectTag.drop(viewModel.selectTag.indexOf(id))
             }
         } else if (holder.binding is ChoseTypeItemBinding) {
             holder.setType(selectedPosition == position, typeArr[position])
             val bind = holder.binding as ChoseTypeItemBinding
-            if (viewModel.type == typeArr[position].chinese) {
+            val type = typeArr[position].id
+            if (viewModel.type == type) {
                 Handler(Looper.getMainLooper()).postDelayed({
                     bind.radioButton.isChecked = true
                 }, 0)
             }
-            bind.radioButton.setOnCheckedChangeListener { buttonView, _ ->
+            bind.radioButton.setOnCheckedChangeListener { _, _ ->
                 selectedPosition = position
-                viewModel.type = buttonView.text.toString()
+                viewModel.type = type
             }
         }
     }

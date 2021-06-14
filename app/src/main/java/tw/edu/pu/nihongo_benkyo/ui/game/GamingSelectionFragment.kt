@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentGamingSelectionBinding
 
 class GamingSelectionFragment : Fragment() {
@@ -17,14 +18,24 @@ class GamingSelectionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentGamingSelectionBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
+        dataBinding.viewModel = viewModel
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = GameViewModel()
-        dataBinding.viewModel = viewModel
-        Log.d("GAME", "onViewCreated: ${arguments?.getString("type")}")
+        dataBinding.lifecycleOwner = activity
+        arguments?.getString("tags")?.let {
+            arguments?.getLong("type")?.let { it1 ->
+                viewModel.getQuestion(it1, it)
+            }
+        }
+        viewModel.questions.observe(viewLifecycleOwner, {
+            if (it.isNotEmpty()){
+                viewModel.currentQuestion.postValue(it[0])
+            }
+        })
     }
 
 }

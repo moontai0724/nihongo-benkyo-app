@@ -11,13 +11,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import tw.edu.pu.nihongo_benkyo.json.GameData
 import tw.edu.pu.nihongo_benkyo.model.database.*
 
-class Repository(context: Context) {
+class Repository(val context: Context) {
     private var retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl("https://ts1.cmrdb.cs.pu.edu.tw/~moontai0724/")
         .build()
     private var database: SqlDao = MyDatabase.getDatabase(context, GlobalScope).getDao()
-
     fun update(completion: (Boolean) -> Unit) {
         retrofit.create(ApiService::class.java).getAllData().enqueue(object : Callback<GameData> {
             override fun onResponse(call: Call<GameData>, response: Response<GameData>) {
@@ -25,6 +24,7 @@ class Repository(context: Context) {
                 GlobalScope.launch {
                     setDataIntoDatabase(body)
                 }.invokeOnCompletion {
+                    MyDatabase.getDatabase(context, GlobalScope).close()
                     completion(true)
                 }
             }
@@ -38,10 +38,8 @@ class Repository(context: Context) {
     }
 
     private suspend fun setDataIntoDatabase(body: GameData) {
-        val tagIds: List<Long> =
-            database.insertTags(body.tags.mapTo(ArrayList(), { property -> Tag(property) }))
-        val typeIds: List<Long> =
-            database.insertTypes(body.types.mapTo(ArrayList(), { property -> Type(property) }))
+        database.insertTags(body.tags.mapTo(ArrayList(), { property -> Tag(property) }))
+        database.insertTypes(body.types.mapTo(ArrayList(), { property -> Type(property) }))
 
         for (it in body.questions) {
             val question = Question(it)
