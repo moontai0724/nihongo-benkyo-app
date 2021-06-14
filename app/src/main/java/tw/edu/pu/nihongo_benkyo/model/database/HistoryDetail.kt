@@ -9,17 +9,23 @@ import androidx.room.PrimaryKey
     tableName = "history_detail",
     foreignKeys = [
         ForeignKey(
+            entity = History::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("history_id"),
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
             entity = Question::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("question_id"),
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    primaryKeys = ["history_id", "question_id"]
 )
 data class HistoryDetail(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int,
+    @ColumnInfo(name = "history_id")
+    var historyId: Int,
 
     @ColumnInfo(name = "question_id")
     var questionId: Int,
