@@ -22,7 +22,7 @@ import androidx.room.ForeignKey.CASCADE
 )
 data class QuestionType (
     @ColumnInfo(name = "question_id")
-    var qid: Int,
+    var questionId: Int,
     @ColumnInfo(name = "type_id")
-    var tid: Int
+    var typeId: Int
 )

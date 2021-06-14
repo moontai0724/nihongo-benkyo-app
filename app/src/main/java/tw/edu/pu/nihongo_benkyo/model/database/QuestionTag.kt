@@ -22,7 +22,7 @@ import androidx.room.ForeignKey
 )
 data class QuestionTag (
     @ColumnInfo(name = "question_id")
-    var qid: Int,
+    var questionId: Int,
     @ColumnInfo(name = "tag_id")
-    var tid: Int
+    var tagId: Int
 )

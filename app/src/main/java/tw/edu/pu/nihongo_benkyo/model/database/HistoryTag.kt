@@ -27,5 +27,5 @@ data class HistoryTag(
     var id: Int,
 
     @ColumnInfo(name = "tag_id")
-    var tid: Int
+    var tagId: Int
 )

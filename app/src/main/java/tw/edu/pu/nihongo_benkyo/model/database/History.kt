@@ -22,7 +22,7 @@ data class History(
     var id: Int,
 
     @ColumnInfo(name = "type_id")
-    var tid: Int,
+    var typeId: Int,
 
     @ColumnInfo(name = "time")
     var time: String

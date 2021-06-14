@@ -14,16 +14,16 @@ data class Question(
     var question: String,
 
     @ColumnInfo(name = "option_1")
-    var op1: String,
+    var option1: String,
 
     @ColumnInfo(name = "option_2")
-    var op2: String,
+    var option2: String,
 
     @ColumnInfo(name = "option_3")
-    var op3: String,
+    var option3: String,
 
     @ColumnInfo(name = "option_4")
-    var op4: String,
+    var option4: String,
 
     @ColumnInfo(name = "answer")
     var answer: String,

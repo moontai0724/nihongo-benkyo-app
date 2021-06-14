@@ -11,8 +11,8 @@ data class Tag(
     var id: Int,
 
     @ColumnInfo(name = "english")
-    var eng: String,
+    var english: String,
 
     @ColumnInfo(name = "chinese")
-    var ch: String
+    var chinese: String
 )

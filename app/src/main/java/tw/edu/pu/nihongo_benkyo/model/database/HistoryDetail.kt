@@ -22,11 +22,11 @@ data class HistoryDetail(
     var id: Int,
 
     @ColumnInfo(name = "question_id")
-    var qid: Int,
+    var questionId: Int,
 
     @ColumnInfo(name = "answer")
     var answer: String,
 
     @ColumnInfo(name = "correctness")
-    var correct: Boolean
+    var correctness: Boolean
 )
