@@ -1,6 +1,7 @@
 package tw.edu.pu.nihongo_benkyo.model.database
 
 import androidx.room.*
+import java.io.Serializable
 
 @Entity(
     tableName = "history",
@@ -32,7 +33,7 @@ data class History(
     var totalCorrectAmount: String
 )
 
-class HistoryInfo {
+class HistoryInfo : Serializable {
     @Embedded
     var history: History? = null
 
@@ -43,7 +44,11 @@ class HistoryInfo {
         parentColumn = "id",
         entity = Tag::class,
         entityColumn = "id",
-        associateBy = Junction(value = HistoryTag::class, parentColumn = "history_id", entityColumn = "tag_id")
+        associateBy = Junction(
+            value = HistoryTag::class,
+            parentColumn = "history_id",
+            entityColumn = "tag_id"
+        )
     )
     var tags: List<Tag>? = null
 }

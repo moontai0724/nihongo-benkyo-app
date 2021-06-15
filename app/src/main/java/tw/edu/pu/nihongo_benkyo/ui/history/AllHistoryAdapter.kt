@@ -36,7 +36,7 @@ class AllHistoryViewHolder(val binding: HistoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun setBind(data: HistoryInfo) {
-        binding.historyData = data
+        binding.historyInfo = data
         binding.executePendingBindings()
     }
 }

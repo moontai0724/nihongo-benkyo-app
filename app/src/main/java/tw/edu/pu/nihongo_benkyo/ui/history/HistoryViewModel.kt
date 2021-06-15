@@ -1,7 +1,9 @@
 package tw.edu.pu.nihongo_benkyo.ui.history
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
@@ -19,16 +21,15 @@ class HistoryViewModel : ViewModel() {
 
     var allHistory: MutableLiveData<List<HistoryInfo>> = MutableLiveData()
 
-    var historyDetail: MutableLiveData<List<HistoryDetailAndQuestion>> = MutableLiveData()
-    var historyDetailInfo: MutableLiveData<HistoryInfo> = MutableLiveData()
+    var historyDetails: MutableLiveData<List<HistoryDetailAndQuestion>> = MutableLiveData()
 
-    fun getAllHistory(){
+    fun getAllHistory() {
         GlobalScope.launch {
             allHistory.postValue(MainActivity.database.getAllHistory())
         }
     }
 
-    fun allHistoryReplay(view: View){
+    fun allHistoryReplay(view: View) {
         Navigation.findNavController(view).navigate(R.id.action_nav_history_to_nav_game)
         /*
             val bundle = Bundle()
@@ -39,13 +40,20 @@ class HistoryViewModel : ViewModel() {
         // action_gamingInputFragment_to_nav_history
     }
 
-    fun showHistoryDetail(view: View, historyId:Long){
+    fun showHistoryDetail(view: View, historyInfo: HistoryInfo) {
         val bundle = Bundle()
-        bundle.putLong("historyId", historyId)
-        Navigation.findNavController(view).navigate(R.id.action_allHistoryFragment_to_historyDetailFragment, bundle)
+        bundle.putSerializable("historyInfo", historyInfo)
+        Navigation.findNavController(view)
+            .navigate(R.id.action_allHistoryFragment_to_historyDetailFragment, bundle)
     }
 
-    fun historyDetailReplay(view: View){
+    fun getAllDetail(historyId: Long) {
+        GlobalScope.launch {
+            historyDetails.postValue(MainActivity.database.getHistoryDetails(historyId))
+        }
+    }
+
+    fun historyDetailReplay(view: View) {
         /*
             val bundle = Bundle()
             bundle.putString("type", type)
@@ -59,8 +67,8 @@ class HistoryViewModel : ViewModel() {
     companion object {
         @JvmStatic
         @BindingAdapter("setTags")
-        fun setTag(text: TextView, info:List<Tag>){
-            if (info.isNotEmpty()){
+        fun setTag(text: TextView, info: List<Tag>) {
+            if (info.isNotEmpty()) {
                 var str = info[0].chinese
                 info.forEach {
                     if (it.chinese != str)

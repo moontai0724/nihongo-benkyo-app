@@ -4,7 +4,7 @@
 
     <data>
         <variable
-            name="historyData"
+            name="historyInfo"
             type="tw.edu.pu.nihongo_benkyo.model.database.HistoryInfo" />
         <variable
             name="viewModel"
@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_white_bordered_rounded"
-        android:layout_margin="10dp"
-        android:onClick="@{(v)->viewModel.showHistoryDetail(v, historyData.history.id)}">
+        android:layout_margin="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/info"
@@ -41,7 +40,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{historyData.history.time}"
+                android:text="@{historyInfo.history.time}"
                 app:layout_constraintStart_toEndOf="@id/textView4"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +57,7 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{historyData.type.chinese}"
+                android:text="@{historyInfo.type.chinese}"
                 app:layout_constraintStart_toEndOf="@id/textView6"
                 app:layout_constraintTop_toBottomOf="@id/textView4" />
 
@@ -75,7 +74,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                setTags="@{historyData.tags}"
+                setTags="@{historyInfo.tags}"
                 app:layout_constraintStart_toEndOf="@id/textView8"
                 app:layout_constraintTop_toBottomOf="@id/textView6" />
 
@@ -106,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{historyData.history.totalCorrectAmount}"
+                        android:text="@{historyInfo.history.totalCorrectAmount}"
                         android:textSize="48sp" />
 
                     <TextView
@@ -120,7 +119,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:text="@{historyData.history.totalQuestionAmount}"
+                        android:text="@{historyInfo.history.totalQuestionAmount}"
                         android:textSize="24sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -177,7 +176,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/background_white_bordered_rounded_rb"
-            android:onClick="@{(v)->viewModel.showHistoryDetail(v, historyData.history.id)}"
+            android:onClick="@{(v)->viewModel.showHistoryDetail(v, historyInfo)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/replay"
