@@ -99,7 +99,6 @@ class HistoryDetailViewHolder : RecyclerView.ViewHolder {
     fun setListData(data: HistoryDetailAndQuestion) {
         if (binding is HistorySingleInputItemBinding) {
             val bind = binding as HistorySingleInputItemBinding
-            Log.d("hda-data", "hasPendingBindings: ${bind.hasPendingBindings()}")
             bind.data = data
             bind.root.reply.setBackgroundColor(
                 ContextCompat.getColor(

@@ -72,14 +72,12 @@ class GameViewModel : ViewModel() {
     fun getQuestion(type: Long, tags: LongArray) {
         GlobalScope.launch {
             val allQuestion = MainActivity.database.getQuestionsByTypeAndTag(type, tags.toList())
-            Log.d("GAME", "getQuestion: $allQuestion")
             questions.postValue(allQuestion)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun initializeQuestion(type: Long, tags: LongArray){
-        Log.d("GAME", "initializeQuestion: ${tags.toList()}")
         index = 0
         correctCount = 0
         historyDetail = ArrayList()
@@ -94,9 +92,7 @@ class GameViewModel : ViewModel() {
             "0"
         )
         GlobalScope.launch {
-            Log.d("GAME", "initializeQuestion: before history $history")
             history.id = MainActivity.database.insertHistory(history)
-            Log.d("GAME", "initializeQuestion: history $history")
             tags.forEach {
                 MainActivity.database.insertHistoryTag(HistoryTag(history.id!!, it))
             }

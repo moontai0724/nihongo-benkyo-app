@@ -36,11 +36,9 @@ class GamingInputFragment : Fragment() {
         val tags = arguments?.getLongArray("tags")!!
         val type = arguments?.getLong("type")!!
         if (questions == null) {
-            Log.d("GAME", "onViewCreated: retry")
             viewModel.questions.postValue(ArrayList())
             viewModel.getQuestion(type, tags)
         } else {
-            Log.d("GAME", "onViewCreated: noRetry")
             viewModel.questions.postValue(questions)
         }
         viewModel.questions.observe(viewLifecycleOwner, {
