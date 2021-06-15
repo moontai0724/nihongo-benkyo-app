@@ -83,7 +83,7 @@ interface SqlDao {
     @Query(
         "SELECT `question`.* FROM `history_detail`" +
                 " LEFT JOIN `question` ON `history_detail`.`question_id` = `question`.`id`" +
-                " WHERE `history_id` = :history_id"
+                " WHERE `history_id` = :history_id ORDER BY random()"
     )
     suspend fun getHistoryQuestions(history_id: Long): List<Question>
 

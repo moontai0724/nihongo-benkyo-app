@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentHistoryDetailBinding
 import tw.edu.pu.nihongo_benkyo.model.database.HistoryInfo
+import tw.edu.pu.nihongo_benkyo.model.database.Question
 
 class HistoryDetailFragment : Fragment() {
     private lateinit var dataBinding: FragmentHistoryDetailBinding
@@ -33,6 +35,15 @@ class HistoryDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
         dataBinding.adapter = adapter
+        viewModel.historyQuestions.observe(viewLifecycleOwner, {
+            val bundle = Bundle()
+            val tagLongList = viewModel.historyInfo.value?.tags?.map { tag -> tag.id }
+            val tagLongArray = LongArray(tagLongList!!.size, tagLongList::get)
+            bundle.putLong("type", viewModel.historyInfo.value?.type?.id!!)
+            bundle.putLongArray("tags", tagLongArray)
+            bundle.putParcelableArrayList("questions", it as ArrayList<Question>)
+            Navigation.findNavController(view).navigate(viewModel.targetFragment.value!!, bundle)
+        })
     }
 
     override fun onResume() {
