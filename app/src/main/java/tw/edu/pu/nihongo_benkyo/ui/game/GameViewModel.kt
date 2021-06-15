@@ -2,7 +2,6 @@ package tw.edu.pu.nihongo_benkyo.ui.game
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -19,7 +18,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 
 class GameViewModel : ViewModel() {
@@ -81,7 +79,6 @@ class GameViewModel : ViewModel() {
     }
 
     fun settingComplete(view: View) {
-
         val bundle = Bundle()
         bundle.putLong("type", type)
         val longArrayTags = LongArray(selectTag.size, selectTag::get)

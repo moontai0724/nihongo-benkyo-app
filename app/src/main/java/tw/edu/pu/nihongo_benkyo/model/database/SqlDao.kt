@@ -77,6 +77,13 @@ interface SqlDao {
     @Query("SELECT * FROM `history` WHERE `id` = :history_id")
     suspend fun getHistory(history_id: Long): HistoryInfo
 
+    @Query(
+        "SELECT `question`.* FROM `history_detail`" +
+                " LEFT JOIN `question` ON `history_detail`.`question_id` = `question`.`id`" +
+                " WHERE `history_id` = :history_id"
+    )
+    suspend fun getHistoryQuestions(history_id: Long): List<Question>
+
     // history-detail
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertHistoryDetails(details: List<HistoryDetail>): List<Long>

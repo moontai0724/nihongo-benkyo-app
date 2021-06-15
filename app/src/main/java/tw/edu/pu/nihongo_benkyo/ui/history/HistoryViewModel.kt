@@ -1,9 +1,7 @@
 package tw.edu.pu.nihongo_benkyo.ui.history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
@@ -15,13 +13,16 @@ import tw.edu.pu.nihongo_benkyo.MainActivity
 import tw.edu.pu.nihongo_benkyo.R
 import tw.edu.pu.nihongo_benkyo.model.database.HistoryDetailAndQuestion
 import tw.edu.pu.nihongo_benkyo.model.database.HistoryInfo
+import tw.edu.pu.nihongo_benkyo.model.database.Question
 import tw.edu.pu.nihongo_benkyo.model.database.Tag
 
 class HistoryViewModel : ViewModel() {
 
     var allHistory: MutableLiveData<List<HistoryInfo>> = MutableLiveData()
-
+    var historyInfo: MutableLiveData<HistoryInfo> = MutableLiveData()
+    var tagetFragment: MutableLiveData<Int> = MutableLiveData()
     var historyDetails: MutableLiveData<List<HistoryDetailAndQuestion>> = MutableLiveData()
+    var historyQuestions: MutableLiveData<List<Question>> = MutableLiveData()
 
     fun getAllHistory() {
         GlobalScope.launch {
@@ -29,15 +30,16 @@ class HistoryViewModel : ViewModel() {
         }
     }
 
-    fun allHistoryReplay(view: View) {
-        Navigation.findNavController(view).navigate(R.id.action_nav_history_to_nav_game)
-        /*
-            val bundle = Bundle()
-            bundle.putString("type", type)
-            bundle.putStringArrayList("tags", tags)
-            */
-        // action_gamingSelectionFragment_to_nav_history
-        // action_gamingInputFragment_to_nav_history
+    fun getHistoryQuestions(history_id: Long) {
+        GlobalScope.launch {
+            historyQuestions.postValue(MainActivity.database.getHistoryQuestions(history_id))
+        }
+    }
+
+    fun allHistoryReplay(view: View, historyInfo: HistoryInfo) {
+        this.historyInfo.postValue(historyInfo)
+        tagetFragment.postValue(R.id.action_nav_history_to_nav_game)
+        getHistoryQuestions(historyInfo.history?.id!!)
     }
 
     fun showHistoryDetail(view: View, historyInfo: HistoryInfo) {
@@ -53,15 +55,10 @@ class HistoryViewModel : ViewModel() {
         }
     }
 
-    fun historyDetailReplay(view: View) {
-        /*
-            val bundle = Bundle()
-            bundle.putString("type", type)
-            bundle.putStringArrayList("tags", tags)
-            */
-        Navigation.findNavController(view).navigate(R.id.action_historyDetailFragment_to_nav_game)
-        // action_historyDetailFragment_to_gamingInputFragment
-        // action_historyDetailFragment_to_gamingSelectionFragment
+    fun historyDetailReplay(view: View, historyInfo: HistoryInfo) {
+        this.historyInfo.postValue(historyInfo)
+        tagetFragment.postValue(R.id.action_historyDetailFragment_to_nav_game)
+        getHistoryQuestions(historyInfo.history?.id!!)
     }
 
     companion object {

@@ -141,7 +141,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="@drawable/background_white_bordered_rounded_b"
-            android:onClick="@{(v)->viewModel.historyDetailReplay(v)}"
+            android:onClick="@{(v)->viewModel.historyDetailReplay(v, historyInfo)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
