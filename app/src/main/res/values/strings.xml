@@ -8,10 +8,40 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    
+    <string name="menu_home">首頁</string>
+    <string name="menu_history">歷史紀錄</string>
+    <string name="menu_game">作答區</string>
+    <string name="history_detail">詳細歷史紀錄</string>
+
     <string name="app_name_start">日文學習\nAPP</string>
     <string name="start">START</string>
+    <string name="background">background</string>
+    <string name="game_content">作答內容</string>
+    <string name="game_history">答題記錄</string>
+
+    <string name="error_back">錯誤回饋</string>
+    <string name="all_history">全部紀錄</string>
+    <string name="a_history">單一紀錄</string>
+
+    <string name="question_type">作答方式</string>
+    <string name="question_content">測驗內容</string>
+    <string name="icon">icon</string>
+    <string name="submit">送出</string>
+    <string name="replay">重玩</string>
+    <string name="inspect">詳細</string>
+    <string name="correct_amount">正確數</string>
+    <string-array name="question_type">
+        <item>問答</item>
+        <item>填空</item>
+        <item>選擇</item>
+    </string-array>
+
+    <string-array name="question_content">
+        <item>平假名</item>
+        <item>片假名</item>
+        <item>羅馬音</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
