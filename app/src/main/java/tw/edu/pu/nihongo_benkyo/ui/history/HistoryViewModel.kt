@@ -20,7 +20,7 @@ class HistoryViewModel : ViewModel() {
 
     var allHistory: MutableLiveData<List<HistoryInfo>> = MutableLiveData()
     var historyInfo: MutableLiveData<HistoryInfo> = MutableLiveData()
-    var tagetFragment: MutableLiveData<Int> = MutableLiveData()
+    var targetFragment: MutableLiveData<Int> = MutableLiveData()
     var historyDetails: MutableLiveData<List<HistoryDetailAndQuestion>> = MutableLiveData()
     var historyQuestions: MutableLiveData<List<Question>> = MutableLiveData()
 
@@ -38,7 +38,7 @@ class HistoryViewModel : ViewModel() {
 
     fun allHistoryReplay(view: View, historyInfo: HistoryInfo) {
         this.historyInfo.postValue(historyInfo)
-        tagetFragment.postValue(R.id.action_nav_history_to_nav_game)
+        targetFragment.postValue(R.id.action_nav_history_to_nav_game)
         getHistoryQuestions(historyInfo.history?.id!!)
     }
 
@@ -57,7 +57,7 @@ class HistoryViewModel : ViewModel() {
 
     fun historyDetailReplay(view: View, historyInfo: HistoryInfo) {
         this.historyInfo.postValue(historyInfo)
-        tagetFragment.postValue(R.id.action_historyDetailFragment_to_nav_game)
+        targetFragment.postValue(R.id.action_historyDetailFragment_to_nav_game)
         getHistoryQuestions(historyInfo.history?.id!!)
     }
 

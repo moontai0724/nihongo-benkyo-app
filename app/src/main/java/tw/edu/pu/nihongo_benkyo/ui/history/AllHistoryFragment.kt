@@ -36,9 +36,12 @@ class AllHistoryFragment : Fragment() {
         })
         viewModel.historyQuestions.observe(viewLifecycleOwner, {
             val bundle = Bundle()
+            val tagLongList = viewModel.historyInfo.value?.tags?.map { tag -> tag.id }
+            val tagLongArray = LongArray(tagLongList!!.size, tagLongList::get)
             bundle.putLong("type", viewModel.historyInfo.value?.type?.id!!)
+            bundle.putLongArray("tags", tagLongArray)
             bundle.putParcelableArrayList("questions", it as ArrayList<Question>)
-            Navigation.findNavController(view).navigate(viewModel.tagetFragment.value!!, bundle)
+            Navigation.findNavController(view).navigate(viewModel.targetFragment.value!!, bundle)
         })
     }
 

@@ -67,6 +67,9 @@ interface SqlDao {
     @Update
     suspend fun updateHistory(history: History): Int
 
+    @Delete
+    suspend fun deleteHistory(history: History): Int
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertHistoryTag(historyTag: HistoryTag): Long
 

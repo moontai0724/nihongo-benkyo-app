@@ -2,6 +2,7 @@ package tw.edu.pu.nihongo_benkyo.ui.game
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,19 +33,21 @@ class GamingSelectionFragment : Fragment() {
         dataBinding.lifecycleOwner = activity
         dataBinding.viewModel = viewModel
         val questions = arguments?.getParcelableArrayList<Question>("questions")
+        val tags = arguments?.getLongArray("tags")!!
+        val type = arguments?.getLong("type")!!
         if (questions == null) {
-            viewModel.questions.postValue(ArrayList())
-            arguments?.getLongArray("tags")?.let {
-                arguments?.getLong("type")?.let { it1 ->
-                    viewModel.getQuestion(it1, it)
-                }
-            }
+            viewModel.getQuestion(type, tags)
         } else {
             viewModel.questions.postValue(questions)
         }
         viewModel.questions.observe(viewLifecycleOwner, {
             viewModel.currentQuestion.postValue(if (it.isEmpty()) null else it[0])
-            if (it.isEmpty()){
+            if (it.isNotEmpty())
+                viewModel.initializeQuestion(type, tags)
+        })
+
+        viewModel.currentQuestion.observe(viewLifecycleOwner, {
+            if (it == null){
                 viewModel.noQuestionPop(requireContext()){
                     findNavController().popBackStack()
                 }

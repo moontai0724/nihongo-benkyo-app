@@ -2,6 +2,7 @@ package tw.edu.pu.nihongo_benkyo.ui.game
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentGamingInputBinding
 import tw.edu.pu.nihongo_benkyo.model.database.Question
+import kotlin.math.log
 
 class GamingInputFragment : Fragment() {
     lateinit var dataBinding: FragmentGamingInputBinding
@@ -31,24 +33,30 @@ class GamingInputFragment : Fragment() {
         dataBinding.lifecycleOwner = activity
         dataBinding.viewModel = viewModel
         val questions = arguments?.getParcelableArrayList<Question>("questions")
+        val tags = arguments?.getLongArray("tags")!!
+        val type = arguments?.getLong("type")!!
         if (questions == null) {
+            Log.d("GAME", "onViewCreated: retry")
             viewModel.questions.postValue(ArrayList())
-            arguments?.getLongArray("tags")?.let {
-                arguments?.getLong("type")?.let { it1 ->
-                    viewModel.getQuestion(it1, it)
-                }
-            }
+            viewModel.getQuestion(type, tags)
         } else {
+            Log.d("GAME", "onViewCreated: noRetry")
             viewModel.questions.postValue(questions)
         }
         viewModel.questions.observe(viewLifecycleOwner, {
             viewModel.currentQuestion.postValue(if (it.isEmpty()) null else it[0])
-            if (it.isEmpty()){
+            if (it.isNotEmpty())
+                viewModel.initializeQuestion(type, tags)
+        })
+
+        viewModel.currentQuestion.observe(viewLifecycleOwner, {
+            if (it == null){
                 viewModel.noQuestionPop(requireContext()){
                     findNavController().popBackStack()
                 }
             }
         })
+
     }
 
 }

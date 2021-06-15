@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -22,6 +23,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.log
 
 class GameViewModel : ViewModel() {
     // game set
@@ -67,8 +69,17 @@ class GameViewModel : ViewModel() {
         this.single.postValue(single)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getQuestion(type: Long, tags: LongArray) {
+        GlobalScope.launch {
+            val allQuestion = MainActivity.database.getQuestionsByTypeAndTag(type, tags.toList())
+            Log.d("GAME", "getQuestion: $allQuestion")
+            questions.postValue(allQuestion)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun initializeQuestion(type: Long, tags: LongArray){
+        Log.d("GAME", "initializeQuestion: ${tags.toList()}")
         index = 0
         correctCount = 0
         historyDetail = ArrayList()
@@ -83,12 +94,12 @@ class GameViewModel : ViewModel() {
             "0"
         )
         GlobalScope.launch {
+            Log.d("GAME", "initializeQuestion: before history $history")
             history.id = MainActivity.database.insertHistory(history)
+            Log.d("GAME", "initializeQuestion: history $history")
             tags.forEach {
                 MainActivity.database.insertHistoryTag(HistoryTag(history.id!!, it))
             }
-            val allQuestion = MainActivity.database.getQuestionsByTypeAndTag(type, tags.toList())
-            questions.postValue(allQuestion)
         }
     }
 
