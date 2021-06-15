@@ -1,10 +1,12 @@
 package tw.edu.pu.nihongo_benkyo.ui.game
 
 import android.app.ProgressDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -71,21 +73,23 @@ class GameSettingFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        val type = arguments?.getLong("type")
-        if (type != null) {
+        val questions = arguments?.getParcelableArrayList<Question>("questions")
+        if (questions != null) {
             progressDialog.dismiss()
-            when (type.toInt()) {
+            when (arguments?.getLong("type")?.toInt()) {
                 1 -> findNavController().navigate(
                     R.id.action_nav_game_to_gamingSelectionFragment,
-                    arguments
+                    arguments?.deepCopy()
                 )
                 else -> findNavController().navigate(
                     R.id.action_nav_game_to_gamingInputFragment,
-                    arguments
+                    arguments?.clone() as Bundle
                 )
             }
+            arguments?.clear()
         } else {
             gameViewModel.selectTag = ArrayList()
             gameViewModel.type = 0
