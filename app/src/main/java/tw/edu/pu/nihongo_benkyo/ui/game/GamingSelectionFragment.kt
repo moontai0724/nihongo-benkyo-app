@@ -54,4 +54,10 @@ class GamingSelectionFragment : Fragment() {
             }
         })
     }
+
+    override fun onStop() {
+        super.onStop()
+        if (viewModel.index < viewModel.questions.value!!.size)
+            viewModel.deleteHistory()
+    }
 }

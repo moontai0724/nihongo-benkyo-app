@@ -35,7 +35,7 @@ class GameViewModel : ViewModel() {
     var selectTag: List<Long> = ArrayList()
 
     // gaming
-    private var index = 0
+    var index = 0
     var questions: MutableLiveData<List<Question>> = MutableLiveData()
     var currentQuestion: MutableLiveData<Question?> = MutableLiveData()
     lateinit var history: History
@@ -118,6 +118,12 @@ class GameViewModel : ViewModel() {
             }
         } else
             Toast.makeText(view.context, "有選擇沒選到喔", Toast.LENGTH_LONG).show()
+    }
+
+    fun deleteHistory(){
+        GlobalScope.launch {
+            MainActivity.database.deleteHistory(history)
+        }
     }
 
     fun selectionBtnClick(view: View, select: Int) {
