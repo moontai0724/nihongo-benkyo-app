@@ -53,7 +53,10 @@ class GameSettingAdapter(
                     if (!viewModel.selectTag.contains(id))
                         viewModel.selectTag = viewModel.selectTag + id
                 }else{
-                    viewModel.selectTag = viewModel.selectTag.drop(viewModel.selectTag.indexOf(id))
+                    val tags = ArrayList(viewModel.selectTag).apply {
+                        removeAt(viewModel.selectTag.indexOf(id))
+                    }
+                    viewModel.selectTag = tags
                 }
             }
         } else if (holder.binding is ChoseTypeItemBinding) {

@@ -11,6 +11,7 @@
     <string name="menu_home">首頁</string>
     <string name="menu_history">歷史紀錄</string>
     <string name="menu_game">作答區</string>
+    <string name="history_detail">詳細歷史紀錄</string>
 
     <string name="app_name_start">日文學習\nAPP</string>
     <string name="start">START</string>

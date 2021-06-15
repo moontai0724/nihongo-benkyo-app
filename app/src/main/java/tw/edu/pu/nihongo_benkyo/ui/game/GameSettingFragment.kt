@@ -20,7 +20,7 @@ class GameSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        gameViewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
+        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         dataBinding = FragmentGameSettingBinding.inflate(inflater, container, false)
         return dataBinding.root
     }

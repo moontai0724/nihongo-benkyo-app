@@ -19,7 +19,7 @@ class AllHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAllHistoryBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(HistoryViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         return binding.root
     }
 

@@ -1,5 +1,7 @@
 package tw.edu.pu.nihongo_benkyo.ui.game
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tw.edu.pu.nihongo_benkyo.MainActivity
@@ -38,6 +41,17 @@ class GameViewModel : ViewModel() {
     lateinit var history: History
     var historyDetail: List<HistoryDetail> = ArrayList()
     var correctCount = 0
+
+    fun noQuestionPop(context: Context, popUp:()->Unit){
+        val alert = AlertDialog.Builder(context)
+            .setTitle("注意")
+            .setMessage("此內容的作答方式暫時沒有題目，請更換選項後重試")
+            .setPositiveButton("確定") { _, _ ->
+                popUp()
+            }.create()
+        alert.setCanceledOnTouchOutside(false)
+        alert.show()
+    }
 
     fun getTags() {
         GlobalScope.launch {

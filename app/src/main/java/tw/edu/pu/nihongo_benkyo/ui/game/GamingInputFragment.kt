@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentGamingInputBinding
 
 class GamingInputFragment : Fragment() {
@@ -20,8 +21,7 @@ class GamingInputFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentGamingInputBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
-        dataBinding.viewModel = viewModel
+        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         return dataBinding.root
     }
 
@@ -29,6 +29,7 @@ class GamingInputFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
+        dataBinding.viewModel = viewModel
         viewModel.questions.postValue(ArrayList())
         arguments?.getLongArray("tags")?.let {
             arguments?.getLong("type")?.let { it1 ->
@@ -37,6 +38,11 @@ class GamingInputFragment : Fragment() {
         }
         viewModel.questions.observe(viewLifecycleOwner, {
             viewModel.currentQuestion.postValue(if (it.isEmpty()) null else it[0])
+            if (it.isEmpty()){
+                viewModel.noQuestionPop(requireContext()){
+                    findNavController().popBackStack()
+                }
+            }
         })
     }
 

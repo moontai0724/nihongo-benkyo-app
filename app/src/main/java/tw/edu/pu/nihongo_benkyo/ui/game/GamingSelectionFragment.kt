@@ -1,5 +1,7 @@
 package tw.edu.pu.nihongo_benkyo.ui.game
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentGamingSelectionBinding
 
 class GamingSelectionFragment : Fragment() {
@@ -21,8 +24,8 @@ class GamingSelectionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentGamingSelectionBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
-        dataBinding.viewModel = viewModel
+        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+
         return dataBinding.root
     }
 
@@ -30,6 +33,7 @@ class GamingSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
+        dataBinding.viewModel = viewModel
         viewModel.questions.postValue(ArrayList())
         arguments?.getLongArray("tags")?.let {
             arguments?.getLong("type")?.let { it1 ->
@@ -38,6 +42,11 @@ class GamingSelectionFragment : Fragment() {
         }
         viewModel.questions.observe(viewLifecycleOwner, {
             viewModel.currentQuestion.postValue(if (it.isEmpty()) null else it[0])
+            if (it.isEmpty()){
+                viewModel.noQuestionPop(requireContext()){
+                    findNavController().popBackStack()
+                }
+            }
         })
     }
 }

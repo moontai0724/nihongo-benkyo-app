@@ -21,7 +21,7 @@ class HistoryDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = FragmentHistoryDetailBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(HistoryViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         historyInfo = arguments?.getSerializable("historyInfo") as HistoryInfo
         adapter = HistoryDetailAdapter(historyInfo.type?.id!!, viewModel, historyInfo)
         viewModel.historyDetails.observe(viewLifecycleOwner, { adapter.setData(it) })
