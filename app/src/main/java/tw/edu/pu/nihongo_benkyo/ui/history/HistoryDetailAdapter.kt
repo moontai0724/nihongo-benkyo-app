@@ -3,7 +3,6 @@ package tw.edu.pu.nihongo_benkyo.ui.history
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.history_single_input_item.view.*
@@ -123,7 +122,7 @@ class HistoryDetailViewHolder : RecyclerView.ViewHolder {
         }
     }
 
-    fun setColor(binding: HistorySingleSelectionItemBinding, index: Int, color: Int) {
+    private fun setColor(binding: HistorySingleSelectionItemBinding, index: Int, color: Int) {
         val target = when (index) {
             1 -> binding.root.option1
             2 -> binding.root.option2

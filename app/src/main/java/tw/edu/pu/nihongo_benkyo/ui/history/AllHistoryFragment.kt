@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentAllHistoryBinding
+import tw.edu.pu.nihongo_benkyo.model.database.Question
 
 class AllHistoryFragment : Fragment() {
 
@@ -31,6 +33,12 @@ class AllHistoryFragment : Fragment() {
         viewModel.allHistory.observe(viewLifecycleOwner, {
             if (it.isNotEmpty())
                 adapter.setHistory(it)
+        })
+        viewModel.historyQuestions.observe(viewLifecycleOwner, {
+            val bundle = Bundle()
+            bundle.putLong("type", viewModel.historyInfo.value?.type?.id!!)
+            bundle.putParcelableArrayList("questions", it as ArrayList<Question>)
+            Navigation.findNavController(view).navigate(viewModel.tagetFragment.value!!, bundle)
         })
     }
 

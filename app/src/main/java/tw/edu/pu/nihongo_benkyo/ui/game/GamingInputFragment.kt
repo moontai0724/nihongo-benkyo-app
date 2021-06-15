@@ -2,7 +2,6 @@ package tw.edu.pu.nihongo_benkyo.ui.game
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import tw.edu.pu.nihongo_benkyo.databinding.FragmentGamingInputBinding
+import tw.edu.pu.nihongo_benkyo.model.database.Question
 
 class GamingInputFragment : Fragment() {
     lateinit var dataBinding: FragmentGamingInputBinding
@@ -30,11 +30,16 @@ class GamingInputFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.lifecycleOwner = activity
         dataBinding.viewModel = viewModel
-        viewModel.questions.postValue(ArrayList())
-        arguments?.getLongArray("tags")?.let {
-            arguments?.getLong("type")?.let { it1 ->
-                viewModel.getQuestion(it1, it)
+        val questions = arguments?.getParcelableArrayList<Question>("questions")
+        if (questions == null) {
+            viewModel.questions.postValue(ArrayList())
+            arguments?.getLongArray("tags")?.let {
+                arguments?.getLong("type")?.let { it1 ->
+                    viewModel.getQuestion(it1, it)
+                }
             }
+        } else {
+            viewModel.questions.postValue(questions)
         }
         viewModel.questions.observe(viewLifecycleOwner, {
             viewModel.currentQuestion.postValue(if (it.isEmpty()) null else it[0])
