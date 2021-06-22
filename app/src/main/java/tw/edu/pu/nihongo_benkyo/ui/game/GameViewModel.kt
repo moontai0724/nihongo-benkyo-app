@@ -147,7 +147,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun inputBtnClick(view: View) {
-        val correct = currentQuestion.value?.validation == answerInput.value
+        val correct = Regex(currentQuestion.value?.validation!!).matches(answerInput.value!!)
         historyDetail = historyDetail + HistoryDetail(
             history.id!!,
             currentQuestion.value!!.id,
